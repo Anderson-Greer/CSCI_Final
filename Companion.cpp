@@ -6,14 +6,12 @@ Companion::Companion()
 {
     name_ = "";
     health_ = 0;
-    attack_ = 0;
 }
 
-Companion::Companion(string name, int health, int attack)
+Companion::Companion(string name, int health)
 {
     name_ = name;
     health_ = health;
-    attack_ = attack;
 }
 
 string Companion::getName()
@@ -24,11 +22,6 @@ string Companion::getName()
 int Companion::getHealth()
 {
     return health_;
-}
-
-int Companion::getAttack()
-{
-    return attack_;
 }
 
 void Companion::setHealth(int health)

@@ -3,19 +3,18 @@
 
 #include <string>
 #include <vector>
-#include "Weapon.cpp"
-#include "Item.cpp"
 
 using namespace std;
 
 class User {
     private:
         string name_;
-        vector<item> ingredients_;
+        vector<Item> ingredients_;
         vector<Weapon> weapons_;
-        vector<item> armor_;
-        vector<item> cookware_;
-        vector<item> selling_treasures_;
+        vector<Item> cookware_;
+        vector<Item> selling_treasures_;
+        bool armor_;
+        int keys_;
 
         int rooms_cleared_;
 
@@ -26,12 +25,23 @@ class User {
 
         // getter functions
         string getName();
-        vector<item> getIngredients();
+        vector<Item> getIngredients();
         vector<Weapon> getWeapons();
-        vector<item> getArmor();
-        vector<item> getCookware();
-        vector<item> getSellingTreasures();
+        bool getArmor();
+        vector<Item> getCookware();
+        vector<Item> getSellingTreasures();
         int getRoomsCleared();
+        int getNumKeys();
+
+        // setter functions
+        vector<Item> addIngredient(Item); // add ingredient to ingredients vector
+        vector<Weapon> addWeapon(Weapon); // add weapon to weapons vector
+        bool setArmor(bool); // changes armor value of player (true if player has armor, false if not) and returns value set
+        vector<Item> addCookware(Item); // add cookware to cookware vector
+        int addKey(); // adds a key to key count and returns the new number of keys
+
+        // other functions
+        void bubbleSortWeapons(vector<Weapon>);
 };
 
 #endif

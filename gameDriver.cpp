@@ -69,7 +69,5 @@ int main() {
     assert(user1.addCookware(test_item2).size() == 1);
     assert(user1.addKey() == 1);
 
-
-
     return 0;
 }

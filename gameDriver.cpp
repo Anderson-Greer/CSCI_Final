@@ -1,10 +1,11 @@
 #include <string>
 #include <vector>
 #include <cassert>
-// #include "User.h"
 #include "Item.cpp"
 #include "Weapon.cpp"
 #include "Companion.cpp"
+#include "Game.cpp"
+#include "User.cpp"
 
 using namespace std;
 
@@ -46,6 +47,27 @@ int main() {
     
     amigo2.setHealth(42);
     assert(amigo2.getHealth() == 42);
+
+    // testing User class
+    User user1;
+    assert(user1.getName() == "");
+    assert(user1.getIngredients().size() == 0);
+    assert(user1.getWeapons().size() == 0);
+    assert(user1.getArmor() == false);
+    assert(user1.getCookware().size() == 0);
+    assert(user1.getSellingTreasures().size() == 0);
+    assert(user1.getRoomsCleared() == 0);
+    assert(user1.getNumKeys() == 0);
+
+    Item test_item1;
+    Item test_item2(0.02, 20, 5, "Pan");
+    Weapon test_weapon(20, 1, "Rapier");
+    
+    assert(user1.addIngredient(test_item1).size() == 1);
+    assert(user1.addWeapon(test_weapon).size() == 1);
+    assert(user1.setArmor(true) == true);
+    assert(user1.addCookware(test_item2).size() == 1);
+    assert(user1.addKey() == 1);
 
     return 0;
 }

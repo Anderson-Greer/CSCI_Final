@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Weapon.cpp"
+#include "Item.cpp"
 
 using namespace std;
 

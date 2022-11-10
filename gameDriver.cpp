@@ -2,9 +2,9 @@
 #include <vector>
 #include <cassert>
 // #include "User.h"
-// #include "Companion.h"
-#include "Item.h"
-#include "Weapon.h"
+#include "Item.cpp"
+#include "Weapon.cpp"
+#include "Companion.cpp"
 
 using namespace std;
 
@@ -32,6 +32,20 @@ int main() {
     assert(item2.getCost() == 20);
     assert(item2.getAmount() == 1);
     assert(item2.getName() == "cauldron");
+
+    // testing Companion class
+    Companion amigo1;
+    assert(amigo1.getName() == "");
+    assert(amigo1.getHealth() == 0);
+    assert(amigo1.getAttack() == 0);
+
+    Companion amigo2("Lord Farquaad", 123, 69);
+    assert(amigo2.getName() == "Lord Farquaad");
+    assert(amigo2.getHealth() == 123);
+    assert(amigo2.getAttack() == 69);
+    
+    amigo2.setHealth(42);
+    assert(amigo2.getHealth() == 42);
 
     return 0;
 }

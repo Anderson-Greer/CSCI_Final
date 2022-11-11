@@ -26,7 +26,7 @@ class Companion {
         bool getArmor();
         // setter functions
         bool setArmor(bool);
-        void setHealth(int);
+        int setHealth(int);
         vector<Weapon> addWeapon(Weapon);
 };
 

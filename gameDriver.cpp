@@ -40,15 +40,16 @@ int main() {
     assert(amigo1.getName() == "");
     assert(amigo1.getHealth() == 0);
     assert(amigo1.getArmor() == false);
+    assert(amigo1.getWeapons().size() == 0);
 
     Companion amigo2("Lord Farquaad", 123);
     assert(amigo2.getName() == "Lord Farquaad");
     assert(amigo2.getHealth() == 123);
-    
     assert(amigo2.setArmor(true) == true);
-    
-    amigo2.setHealth(42);
-    assert(amigo2.getHealth() == 42);
+    assert(amigo2.setHealth(42) == 42);
+
+    Weapon test_weapon2(100, 100, "Blade of Death");
+    assert(amigo2.addWeapon(test_weapon2).size() == 1);
 
     // testing User class
     User user1;
@@ -75,18 +76,13 @@ int main() {
     // testing Monster class
     Monster monster1;
     assert(monster1.getThreat() == 0);
-    assert(monster1.getHealth() == 0);
     assert(monster1.getAttack() == 0);
     assert(monster1.getName() == "");
 
-    Monster monster2(6, 200, 30, "The Sorcerer");
+    Monster monster2(6, 30, "The Sorcerer");
     assert(monster2.getThreat() == 6);
-    assert(monster2.getHealth() == 200);
     assert(monster2.getAttack() == 30);
     assert(monster2.getName() == "The Sorcerer");
-
-    monster2.setHealth(199);
-    assert(monster2.getHealth() == 199);
 
     return 0;
 }

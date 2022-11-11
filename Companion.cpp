@@ -42,10 +42,10 @@ vector<Weapon> Companion::addWeapon(Weapon newWeapon)
     return weapons_;
 }
 
-void Companion::setHealth(int health)
+int Companion::setHealth(int health)
 {
     health_ = health;
-    return;
+    return health_;
 }
 
 bool Companion::setArmor(bool armor)

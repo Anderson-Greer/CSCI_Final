@@ -8,6 +8,7 @@ User::User() {
     rooms_cleared_ = 0; // number of rooms that have been cleared
     armor_ = false;
     keys_ = 0;
+    fullness_ = 50;
 }
 
 User::User(string name) {
@@ -15,6 +16,7 @@ User::User(string name) {
     rooms_cleared_ = 0;
     armor_ = false;
     keys_ = 0;
+    fullness_ = 50;
 }
 
 string User::getName() {
@@ -49,6 +51,10 @@ int User::getNumKeys() {
     return keys_;
 }
 
+int User::getFullness() {
+    return fullness_;
+}
+
 vector<Item> User::addIngredient(Item item) { // add ingredient to ingredients vector
     ingredients_.push_back(item);
     return ingredients_;
@@ -72,6 +78,11 @@ vector<Item> User::addCookware(Item cookware) { // add cookware to cookware vect
 int User::addKey() { // adds a key to key count and returns the new number of keys
     keys_++;
     return keys_;
+}
+
+int User::setFullness(int lost_fullness) {
+    fullness_ -= lost_fullness;
+    return fullness_;
 }
 
 /*

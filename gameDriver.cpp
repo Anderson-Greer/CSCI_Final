@@ -61,16 +61,20 @@ int main() {
     assert(user1.getSellingTreasures().size() == 0);
     assert(user1.getRoomsCleared() == 0);
     assert(user1.getNumKeys() == 0);
+    assert(user1.getFullness() == 50);
 
     Item test_item1;
     Item test_item2(0.02, 20, 5, "Pan");
     Weapon test_weapon(20, 1, "Rapier");
-    
-    assert(user1.addIngredient(test_item1).size() == 1);
-    assert(user1.addWeapon(test_weapon).size() == 1);
-    assert(user1.setArmor(true) == true);
-    assert(user1.addCookware(test_item2).size() == 1);
-    assert(user1.addKey() == 1);
+
+    User user2("Andy");
+    assert(user2.getName() == "Andy");
+    assert(user2.addIngredient(test_item1).size() == 1);
+    assert(user2.addWeapon(test_weapon).size() == 1);
+    assert(user2.setArmor(true) == true);
+    assert(user2.addCookware(test_item2).size() == 1);
+    assert(user2.addKey() == 1);
+    assert(user2.setFullness(10) == 40); // removes 10 fullness from the fullness variable
     
 
     // testing Monster class

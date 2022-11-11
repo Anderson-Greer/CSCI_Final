@@ -6,11 +6,15 @@ using namespace std;
 User::User() {
     name_ = ""; // name of player
     rooms_cleared_ = 0; // number of rooms that have been cleared
+    armor_ = false;
+    keys_ = 0;
 }
 
 User::User(string name) {
     name_ = name;
     rooms_cleared_ = 0;
+    armor_ = false;
+    keys_ = 0;
 }
 
 string User::getName() {

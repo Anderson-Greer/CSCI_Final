@@ -11,21 +11,23 @@ class Companion {
         string name_;
         int health_;
         vector<Weapon> weapons_;
-        vector<Item> armor_;
+        bool armor_;
         
     public:
         // constructors
         Companion();
-        Companion(string, int, int);
+        Companion(string, int);
 
         // getter functions
         string getName();
         int getAttack();
         int getHealth();
         vector<Weapon> getWeapons();
-        vector<Item> getArmor();
-
-        void setHealth(int health);
+        bool getArmor();
+        // setter functions
+        bool setArmor(bool);
+        void setHealth(int);
+        vector<Weapon> addWeapon(Weapon);
 };
 
 #endif

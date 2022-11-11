@@ -3,9 +3,10 @@
 #include <cassert>
 #include "Item.cpp"
 #include "Weapon.cpp"
-#include "Companion.cpp"
 #include "Game.cpp"
 #include "User.cpp"
+#include "Companion.cpp"
+#include "Monster.cpp"
 
 using namespace std;
 
@@ -38,12 +39,13 @@ int main() {
     Companion amigo1;
     assert(amigo1.getName() == "");
     assert(amigo1.getHealth() == 0);
-    assert(amigo1.getAttack() == 0);
+    assert(amigo1.getArmor() == false);
 
-    Companion amigo2("Lord Farquaad", 123, 69);
+    Companion amigo2("Lord Farquaad", 123);
     assert(amigo2.getName() == "Lord Farquaad");
     assert(amigo2.getHealth() == 123);
-    assert(amigo2.getAttack() == 69);
+    
+    assert(amigo2.setArmor(true) == true);
     
     amigo2.setHealth(42);
     assert(amigo2.getHealth() == 42);
@@ -68,6 +70,23 @@ int main() {
     assert(user1.setArmor(true) == true);
     assert(user1.addCookware(test_item2).size() == 1);
     assert(user1.addKey() == 1);
+    
+
+    // testing Monster class
+    Monster monster1;
+    assert(monster1.getThreat() == 0);
+    assert(monster1.getHealth() == 0);
+    assert(monster1.getAttack() == 0);
+    assert(monster1.getName() == "");
+
+    Monster monster2(6, 200, 30, "The Sorcerer");
+    assert(monster2.getThreat() == 6);
+    assert(monster2.getHealth() == 200);
+    assert(monster2.getAttack() == 30);
+    assert(monster2.getName() == "The Sorcerer");
+
+    monster2.setHealth(199);
+    assert(monster2.getHealth() == 199);
 
     return 0;
 }

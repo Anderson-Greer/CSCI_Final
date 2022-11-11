@@ -9,24 +9,24 @@ using namespace std;
 class Companion {
     private:
         string name_;
-        int health_;
+        int fullness_;
         vector<Weapon> weapons_;
         bool armor_;
         
     public:
         // constructors
         Companion();
-        Companion(string, int);
+        Companion(string);
 
         // getter functions
         string getName();
         int getAttack();
-        int getHealth();
+        int getFullness();
         vector<Weapon> getWeapons();
         bool getArmor();
         // setter functions
         bool setArmor(bool);
-        int setHealth(int);
+        int setFullness(int);
         vector<Weapon> addWeapon(Weapon);
 };
 

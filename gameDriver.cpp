@@ -38,15 +38,15 @@ int main() {
     // testing Companion class
     Companion amigo1;
     assert(amigo1.getName() == "");
-    assert(amigo1.getHealth() == 0);
+    assert(amigo1.getFullness() == 50);
     assert(amigo1.getArmor() == false);
     assert(amigo1.getWeapons().size() == 0);
 
-    Companion amigo2("Lord Farquaad", 123);
+    Companion amigo2("Lord Farquaad");
     assert(amigo2.getName() == "Lord Farquaad");
-    assert(amigo2.getHealth() == 123);
+    assert(amigo2.getFullness() == 50);
     assert(amigo2.setArmor(true) == true);
-    assert(amigo2.setHealth(42) == 42);
+    assert(amigo2.setFullness(42) == 8);
 
     Weapon test_weapon2(100, 100, "Blade of Death");
     assert(amigo2.addWeapon(test_weapon2).size() == 1);

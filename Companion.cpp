@@ -5,14 +5,14 @@ using namespace std;
 Companion::Companion()
 {
     name_ = "";
-    health_ = 0;
+    fullness_ = 50;
     armor_ = false;
 }
 
-Companion::Companion(string name, int health)
+Companion::Companion(string name)
 {
     name_ = name;
-    health_ = health;
+    fullness_ = 50;
     armor_ = false;
 }
 
@@ -21,9 +21,9 @@ string Companion::getName()
     return name_;
 }
 
-int Companion::getHealth()
+int Companion::getFullness()
 {
-    return health_;
+    return fullness_;
 }
 
 bool Companion::getArmor()
@@ -42,10 +42,10 @@ vector<Weapon> Companion::addWeapon(Weapon newWeapon)
     return weapons_;
 }
 
-int Companion::setHealth(int health)
+int Companion::setFullness(int lost_fullness)
 {
-    health_ = health;
-    return health_;
+    fullness_ -= lost_fullness;
+    return fullness_;
 }
 
 bool Companion::setArmor(bool armor)

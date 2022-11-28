@@ -9,6 +9,7 @@ User::User() {
     armor_ = 0;
     keys_ = 0;
     fullness_ = 50;
+    gold_ = 100;
 }
 
 User::User(string name) {
@@ -17,6 +18,7 @@ User::User(string name) {
     armor_ = 0;
     keys_ = 0;
     fullness_ = 50;
+    gold_ = 100;
 }
 
 string User::getName() {

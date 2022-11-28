@@ -23,6 +23,7 @@ class Companion {
         int getFullness();
 
         // setter functions
+        void setName(string);
         int setFullness(int);
 };
 

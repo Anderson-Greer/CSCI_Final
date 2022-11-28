@@ -24,6 +24,11 @@ int Companion::getFullness()
     return fullness_;
 }
 
+void Companion::setName(string name)
+{
+    name_ = name;
+}
+
 int Companion::setFullness(int lost_fullness)
 {
     fullness_ -= lost_fullness;

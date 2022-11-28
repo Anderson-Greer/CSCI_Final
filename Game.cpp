@@ -116,6 +116,21 @@ void Game::printStatus(User user) { // prints status update
     printDashedLine();
 }
 
+void Game::printInventory(User user) { // prints status update
+    printDashedLine();
+    cout << "| INVENTORY   |" << endl;
+    printDashedLine();
+    cout << "| Gold        | " << user.getGold() << endl;
+    cout << "| Ingredients | " << user.getIngredients() << endl;
+    cout << "| Cookware    | ";
+    printCookware(user);
+    cout << "| Weapons     | ";
+    printWeapons(user);
+    cout << "| Armor       | " << user.getArmor() << endl;
+    cout << "| Treasures   | ";
+    printTreasures(user);
+}
+
 /*
     1. Check to make sure movement is valid
     2. If direction is valid, move the party using the map class and it's current position

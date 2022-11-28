@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <iostream>
 #include "Item.cpp"
 #include "Weapon.cpp"
 #include "Companion.cpp"
@@ -15,11 +16,35 @@ int main() {
     Game game;
     game.setGameOver(false);
 
+    // create the user
+    string player_name;
+    cout << "Enter a name for your character: " << endl;
+    getline(cin, player_name);
+    User user(player_name);
+
+    // create the four companions
+    cout << "You will now enter the names of your four companions." << endl;
+    for(int i = 0; i < 4; i++) {
+        string companion_name;
+        cout << "Enter the name of companion " << i + 1 << ":" << endl;
+        getline(cin, companion_name);
+        Companion comp(companion_name);
+        user.addCompanion(comp); // add each new companion to the companion vector in the user class
+    }
+
+    cout <<  "Between the five of you, you have 100 gold pieces.\nYou will need to spend the some of your money on the following items:" <<
+        "\n\n- INGREDIENTS. To make food, you have to cook raw ingredients." <<
+        "\n- COOKWARE. If you want to cook, you have to have cookware first." <<
+        "\n- WEAPONS. You'll want at least one weapon per party member to fend off monsters." <<
+        "\n- ARMOR. Armor increases the chances of surviving a monster attack." <<
+        "\n\nYou can spend all of your money here before you start your journey, or you can save some to spend on merchants along the way. " <<
+        "But beware, some of the merchants in this dungeon are shady characters, and they won\'t always give you a fair price..." << endl;
+
+    game.printInventory(user);
+
     // while(!game.getGameOver()) { // runs loop while game is not over
 
     // }
-
-
 
     // testing Weapon class
     Weapon weapon1;
@@ -45,16 +70,6 @@ int main() {
     assert(item2.getAmount() == 1);
     assert(item2.getName() == "cauldron");
 
-    // testing Companion class
-    Companion amigo1;
-    assert(amigo1.getName() == "");
-    assert(amigo1.getFullness() == 50);
-
-    Companion amigo2("Lord Farquaad");
-    assert(amigo2.getName() == "Lord Farquaad");
-    assert(amigo2.getFullness() == 50);
-    assert(amigo2.setFullness(42) == 8);
-
     // testing User class
     User user1;
     assert(user1.getName() == "");
@@ -70,18 +85,7 @@ int main() {
     Item test_item2(0.02, 20, 5, "Pan");
     Weapon test_weapon(20, 1, "Rapier");
 
-    User user2("Andy");
-    assert(user2.getName() == "Andy");
-    assert(user2.setIngredients(15) == 15);
-    assert(user2.addWeapon(test_weapon).size() == 1);
-    assert(user2.setArmor(4) == 4);
-    assert(user2.addCookware(test_item2).size() == 1);
-    assert(user2.addKey() == 1);
-    assert(user2.setFullness(10) == 40); // removes 10 fullness from the fullness variable
-    user2.addCompanion(amigo2);
-    assert(user2.getCompanions().size() == 1);
-
-    game.printStatus(user2);
+    // game.printStatus(user);
     
 
     // // testing Monster class

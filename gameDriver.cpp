@@ -3,14 +3,24 @@
 #include <cassert>
 #include "Item.cpp"
 #include "Weapon.cpp"
-#include "Game.cpp"
-#include "User.cpp"
 #include "Companion.cpp"
+#include "User.cpp"
 #include "Monster.cpp"
+#include "Game.cpp"
 
 using namespace std;
 
 int main() {
+
+    Game game;
+    game.setGameOver(false);
+
+    // while(!game.getGameOver()) { // runs loop while game is not over
+
+    // }
+
+
+
     // testing Weapon class
     Weapon weapon1;
     assert(weapon1.getCost() == 0);
@@ -39,24 +49,17 @@ int main() {
     Companion amigo1;
     assert(amigo1.getName() == "");
     assert(amigo1.getFullness() == 50);
-    assert(amigo1.getArmor() == false);
-    assert(amigo1.getWeapons().size() == 0);
 
     Companion amigo2("Lord Farquaad");
     assert(amigo2.getName() == "Lord Farquaad");
     assert(amigo2.getFullness() == 50);
-    assert(amigo2.setArmor(true) == true);
     assert(amigo2.setFullness(42) == 8);
-
-    Weapon test_weapon2(100, 100, "Blade of Death");
-    assert(amigo2.addWeapon(test_weapon2).size() == 1);
 
     // testing User class
     User user1;
     assert(user1.getName() == "");
-    assert(user1.getIngredients().size() == 0);
     assert(user1.getWeapons().size() == 0);
-    assert(user1.getArmor() == false);
+    assert(user1.getArmor() == 0);
     assert(user1.getCookware().size() == 0);
     assert(user1.getSellingTreasures().size() == 0);
     assert(user1.getRoomsCleared() == 0);
@@ -69,24 +72,28 @@ int main() {
 
     User user2("Andy");
     assert(user2.getName() == "Andy");
-    assert(user2.addIngredient(test_item1).size() == 1);
+    assert(user2.setIngredients(15) == 15);
     assert(user2.addWeapon(test_weapon).size() == 1);
-    assert(user2.setArmor(true) == true);
+    assert(user2.setArmor(4) == 4);
     assert(user2.addCookware(test_item2).size() == 1);
     assert(user2.addKey() == 1);
     assert(user2.setFullness(10) == 40); // removes 10 fullness from the fullness variable
+    user2.addCompanion(amigo2);
+    assert(user2.getCompanions().size() == 1);
+
+    game.printStatus(user2);
     
 
-    // testing Monster class
-    Monster monster1;
-    assert(monster1.getThreat() == 0);
-    assert(monster1.getAttack() == 0);
-    assert(monster1.getName() == "");
+    // // testing Monster class
+    // Monster monster1;
+    // assert(monster1.getThreat() == 0);
+    // assert(monster1.getAttack() == 0);
+    // assert(monster1.getName() == "");
 
-    Monster monster2(6, 30, "The Sorcerer");
-    assert(monster2.getThreat() == 6);
-    assert(monster2.getAttack() == 30);
-    assert(monster2.getName() == "The Sorcerer");
+    // Monster monster2(6, 30, "The Sorcerer");
+    // assert(monster2.getThreat() == 6);
+    // assert(monster2.getAttack() == 30);
+    // assert(monster2.getName() == "The Sorcerer");
 
     return 0;
 }

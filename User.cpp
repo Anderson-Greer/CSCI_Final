@@ -6,7 +6,7 @@ using namespace std;
 User::User() {
     name_ = ""; // name of player
     rooms_cleared_ = 0; // number of rooms that have been cleared
-    armor_ = false;
+    armor_ = 0;
     keys_ = 0;
     fullness_ = 50;
 }
@@ -14,7 +14,7 @@ User::User() {
 User::User(string name) {
     name_ = name;
     rooms_cleared_ = 0;
-    armor_ = false;
+    armor_ = 0;
     keys_ = 0;
     fullness_ = 50;
 }
@@ -23,7 +23,7 @@ string User::getName() {
     return name_;
 }
 
-vector<Item> User::getIngredients() {
+int User::getIngredients() {
     return ingredients_;
 }
 
@@ -31,12 +31,16 @@ vector<Weapon> User::getWeapons() {
     return weapons_;
 }
 
-bool User::getArmor() {
+int User::getArmor() {
     return armor_;
 }
 
 vector<Item> User::getCookware() {
     return cookware_;
+}
+
+vector<Companion> User::getCompanions() {
+    return companions_;
 }
 
 vector<Item> User::getSellingTreasures() {
@@ -55,9 +59,12 @@ int User::getFullness() {
     return fullness_;
 }
 
-vector<Item> User::addIngredient(Item item) { // add ingredient to ingredients vector
-    ingredients_.push_back(item);
-    return ingredients_;
+int User::getAngerLevel() {
+    return anger_level_;
+}
+
+int User::getGold() {
+    return gold_;
 }
 
 vector<Weapon> User::addWeapon(Weapon weapon) { // add weapon to weapons vector
@@ -65,14 +72,19 @@ vector<Weapon> User::addWeapon(Weapon weapon) { // add weapon to weapons vector
     return weapons_;
 }
 
-bool User::setArmor(bool armor_val) { // changes armor value of player (true if player has armor, false if not)
-    armor_ = armor_val;
+int User::setArmor(int armor_num) { // changes armor value of party
+    armor_ = armor_num;
     return armor_;
 }
 
 vector<Item> User::addCookware(Item cookware) { // add cookware to cookware vector
     cookware_.push_back(cookware);
     return cookware_;
+}
+
+vector<Companion> User::addCompanion(Companion companion) { // add cookware to cookware vector
+    companions_.push_back(companion);
+    return companions_;
 }
 
 int User::addKey() { // adds a key to key count and returns the new number of keys
@@ -83,6 +95,21 @@ int User::addKey() { // adds a key to key count and returns the new number of ke
 int User::setFullness(int lost_fullness) {
     fullness_ -= lost_fullness;
     return fullness_;
+}
+
+int User::setAngerLevel(int level) {
+    anger_level_ = level;
+    return anger_level_;
+}
+
+int User::setGold(int gold) {
+    gold_ = gold;
+    return gold_;
+}
+
+int User::setIngredients(int ingredients) {
+    ingredients_ = ingredients;
+    return ingredients;
 }
 
 /*

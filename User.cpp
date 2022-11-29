@@ -10,6 +10,7 @@ User::User() {
     keys_ = 0;
     fullness_ = 50;
     gold_ = 100;
+    ingredients_ = 0;
 }
 
 User::User(string name) {
@@ -19,6 +20,7 @@ User::User(string name) {
     keys_ = 0;
     fullness_ = 50;
     gold_ = 100;
+    ingredients_ = 0;
 }
 
 string User::getName() {
@@ -87,6 +89,16 @@ vector<Item> User::addCookware(Item cookware) { // add cookware to cookware vect
 vector<Companion> User::addCompanion(Companion companion) { // add cookware to cookware vector
     companions_.push_back(companion);
     return companions_;
+}
+
+vector<Item> User::addTreasure(Item treasure) { // add treasure to treasures vector
+    selling_treasures_.push_back(treasure);
+    return selling_treasures_;
+}
+
+vector<Item> User::removeTreasure(int index) { // add treasure to treasures vector
+    selling_treasures_.erase(selling_treasures_.begin() + index);
+    return selling_treasures_;
 }
 
 int User::addKey() { // adds a key to key count and returns the new number of keys

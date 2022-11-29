@@ -7,11 +7,16 @@
 #include "Companion.cpp"
 #include "User.cpp"
 #include "Monster.cpp"
+#include "Merchant.cpp"
 #include "Game.cpp"
 
 using namespace std;
 
 int main() {
+
+    vector<int> intVector{1, 2, 3, 4, 5};
+    intVector.erase(intVector.begin() + 1);
+    cout << intVector.at(1);
 
     Game game;
     game.setGameOver(false);
@@ -37,10 +42,8 @@ int main() {
         "\n- COOKWARE. If you want to cook, you have to have cookware first." <<
         "\n- WEAPONS. You'll want at least one weapon per party member to fend off monsters." <<
         "\n- ARMOR. Armor increases the chances of surviving a monster attack." <<
-        "\n\nYou can spend all of your money here before you start your journey, or you can save some to spend on merchants along the way. " <<
-        "But beware, some of the merchants in this dungeon are shady characters, and they won\'t always give you a fair price..." << endl;
-
-    game.printInventory(user);
+        "\n\nYou can spend all of your money here before you start your journey, or you can save some to spend on merchants along the way." <<
+        "\nBut beware, some of the merchants in this dungeon are shady characters, and they won\'t always give you a fair price..." << endl;
 
     // while(!game.getGameOver()) { // runs loop while game is not over
 
@@ -85,7 +88,14 @@ int main() {
     Item test_item2(0.02, 20, 5, "Pan");
     Weapon test_weapon(20, 1, "Rapier");
 
-    // game.printStatus(user);
+    Item treasure1(0, 10, 1, "R");
+    Item treasure2(0, 50, 1, "G");
+    user.addTreasure(treasure1);
+    user.addTreasure(treasure2);
+
+    Merchant merchant(user);
+
+    merchant.printInteraction(game, user);
     
 
     // // testing Monster class

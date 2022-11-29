@@ -43,7 +43,9 @@ class User {
         // setter functions
         vector<Weapon> addWeapon(Weapon); // add weapon to weapons vector
         vector<Item> addCookware(Item); // add cookware to cookware vector
-        vector<Companion> addCompanion(Companion);
+        vector<Companion> addCompanion(Companion); // add companion to companion vector
+        vector<Item> addTreasure(Item); // add selling treasure to treasure vector
+        vector<Item> removeTreasure(int); // remove selling treasure from treasure vector
         int addKey(); // adds a key to key count and returns the new number of keys
         int setFullness(int); // removes parameter health from health value
         int setAngerLevel(int); // sets the anger level

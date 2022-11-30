@@ -44,18 +44,19 @@ class User {
         vector<Weapon> addWeapon(Weapon); // add weapon to weapons vector
         vector<Item> addCookware(Item); // add cookware to cookware vector
         vector<Companion> addCompanion(Companion); // add companion to companion vector
-        vector<Item> addTreasure(Item); // add selling treasure to treasure vector
+        vector<Item> addTreasure(); // add selling treasure to treasure vector
         vector<Item> removeTreasure(int); // remove selling treasure from treasure vector
         int addKey(); // adds a key to key count and returns the new number of keys
         int increaseRoomsCleared(); // adds one to the number of rooms cleared
         int setFullness(int); // removes parameter health from health value
+        void changePartyFullness(int); // removes or adds an equal amount of fullness from each party member
         int setAngerLevel(int); // sets the anger level
         int setGold(int); // sets the amount of gold
         int setIngredients(int); // set the amount of ingredients
         int setArmor(int); // stores the number of sets of armor the party holds
 
         // other functions
-        void runPlayerAction(Map); // goes through a player action
+        void runPlayerAction(Map&); // goes through a player action
         void bubbleSortWeapons(vector<Weapon>);
 };
 

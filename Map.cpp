@@ -581,3 +581,43 @@ void Map::displayMap()
         cout << endl;
     }
 }
+
+// generates random locations for all 5 rooms and NPCs
+void Map::createMap() {
+    srand((unsigned) time(NULL));
+    // int random = rand() % 9;
+
+    for(int i = 0; i < 5; i++) { // generates 5 rooms
+        int rand_x;
+        int rand_y;
+
+        do {
+            rand_x = rand() % (num_cols_ - 1);
+            rand_y = rand() % (num_rows_ - 1);
+        } while(rand_x == 0 && rand_y == 0);
+
+        if(isFreeSpace(rand_x, rand_y) && !isDungeonExit(rand_x, rand_y)) {
+            addRoom(rand_x, rand_y);
+        }
+        else
+            i--;
+    }
+
+    for(int i = 0; i < 5; i++) { // generates 5 NPCs
+        int rand_x;
+        int rand_y;
+
+        do {
+            rand_x = rand() % num_cols_;
+            rand_y = rand() % num_rows_;
+        } while(rand_x == 0 && rand_y == 0);
+
+        cout << rand_x << ", " << rand_y << endl;
+
+        if(isFreeSpace(rand_x, rand_y)) {
+            addNPC(rand_x, rand_y);
+        }
+        else
+            i--;
+    }
+}

@@ -108,6 +108,7 @@ void Game::printStatus(User user) { // prints status update
     cout << "| PARTY       |" << endl;
     printDashedLine();
     
+    cout << "| " << user.getName() << " | Fullness: " << user.getFullness() << endl;
     for(int i = 0; i < user.getCompanions().size(); i++) {
         Companion compy = user.getCompanions().at(i);
         cout << "| " << compy.getName() << " | Fullness: " << compy.getFullness() << endl;
@@ -129,16 +130,6 @@ void Game::printInventory(User user) { // prints status update
     cout << "| Armor       | " << user.getArmor() << endl;
     cout << "| Treasures   | ";
     printTreasures(user);
-}
-
-/*
-    1. Check to make sure movement is valid
-    2. If direction is valid, move the party using the map class and it's current position
-    3. North: increase row by 1, South: decrease row by 1, West: increase column by 1, East: decrease column by 1
-    4. After movement, each party member has a 20% chance of losing 1 fullness point
-*/
-void Game::move(char direction) { // handles the movement of the party
-
 }
 
 /*

@@ -20,7 +20,6 @@ class Game {
         void printTreasures(User); // prints the number of each type of treasure, to be used in printStatus
         void printStatus(User); // prints the status update
         void printInventory(User); // prints the current inventory of the user
-        void move(char); // handles the movement of the party
         void investigate(); // handles the investigation of a space
         // void fight(Monster); // handles picking a fight
         void cookAndEat(Item, double); // handles cooking and eating ingredients

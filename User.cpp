@@ -136,6 +136,17 @@ int User::setIngredients(int ingredients) {
     return ingredients;
 }
 
+void User::runPlayerAction(Map map) {
+    cout << "\nPlease choose one of the following: " <<
+            "\n  1. Move" <<
+            "\n  2. Investigate, explore an unexplored space. [10% chance you find a key, " <<
+                "20% chance you find treasure, or 20% chance you must fight a random monster]" <<
+            "\n  3. Weapons: It's dangerous to go alone, take this!" <<
+            "\n  4. Armor: If you want to survive monster attacks, you will need some armor." <<
+            "\n  5. Sell treasures: If you find anything shiny, I would be happy to take it off your hands." <<
+            "\n  6. Leave: Make sure you get everything you need, I'm leaving after this sale!" << endl;
+}
+
 /*
     1. Loop through vector
     2. Compare the damage of each weapon to the next weapon in the vector

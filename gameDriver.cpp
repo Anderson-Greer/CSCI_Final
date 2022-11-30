@@ -14,10 +14,6 @@ using namespace std;
 
 int main() {
 
-    vector<int> intVector{1, 2, 3, 4, 5};
-    intVector.erase(intVector.begin() + 1);
-    cout << intVector.at(1);
-
     Game game;
     game.setGameOver(false);
 
@@ -92,6 +88,13 @@ int main() {
     Item treasure2(0, 50, 1, "G");
     user.addTreasure(treasure1);
     user.addTreasure(treasure2);
+
+    user.increaseRoomsCleared();
+    user.increaseRoomsCleared();
+    user.increaseRoomsCleared();
+    user.increaseRoomsCleared();
+
+    game.printStatus(user);
 
     Merchant merchant(user);
 

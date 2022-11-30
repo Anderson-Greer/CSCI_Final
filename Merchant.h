@@ -10,7 +10,7 @@ using namespace std;
 
 class Merchant {
     private:
-        int price_multiplier_;
+        double price_multiplier_;
         
     public:
         // constructors

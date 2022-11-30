@@ -11,6 +11,7 @@ User::User() {
     fullness_ = 50;
     gold_ = 100;
     ingredients_ = 0;
+    anger_level_ = 0;
 }
 
 User::User(string name) {
@@ -21,6 +22,7 @@ User::User(string name) {
     fullness_ = 50;
     gold_ = 100;
     ingredients_ = 0;
+    anger_level_ = 0;
 }
 
 string User::getName() {
@@ -104,6 +106,14 @@ vector<Item> User::removeTreasure(int index) { // add treasure to treasures vect
 int User::addKey() { // adds a key to key count and returns the new number of keys
     keys_++;
     return keys_;
+}
+
+int User::increaseRoomsCleared() { // increases the number of rooms cleared
+    if(rooms_cleared_ >= 5)
+        return -1;
+
+    rooms_cleared_++;
+    return rooms_cleared_;
 }
 
 int User::setFullness(int lost_fullness) {

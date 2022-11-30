@@ -12,6 +12,7 @@ Merchant::Merchant(User user)
 
 void Merchant::printInteraction(Game game, User user) {
     string input;
+    int price;
     bool end = false;
     
     cout << "If you're looking to get supplies, you've come to the right place." <<
@@ -35,12 +36,14 @@ void Merchant::printInteraction(Game game, User user) {
             case 1: // user wants to buy ingredients
             {   
                 string ing_input;
-                cout << "How many kg of ingredients do you need [1 Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
+                cout << "How many kg of ingredients do you need [" << (1 * price_multiplier_) << " Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
                 cin >> ing_input;
+
+                price = stoi(ing_input) * price_multiplier_;
 
                 while(stoi(ing_input) % 5 != 0 && stoi(ing_input) < 0) {
                     cout << "Invalid input." << endl;
-                    cout << "How many kg of ingredients do you need [1 Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
+                    cout << "How many kg of ingredients do you need [" << price << " Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
                     cin >> ing_input;
                 }
 
@@ -49,14 +52,14 @@ void Merchant::printInteraction(Game game, User user) {
                     break;
                 }
 
-                cout << "You want to buy " << ing_input << " kg of ingredients for " << ing_input << " Gold? (y/n)" << endl;
-
+                cout << "You want to buy " << ing_input << " kg of ingredients for " << price << " Gold? (y/n)" << endl;
+                
                 string YorN;
                 cin >> YorN;
 
                 if(YorN == "y") {
-                    if(user.getGold() >= stoi(ing_input)) {
-                        user.setGold(user.getGold() - stoi(ing_input));
+                    if(user.getGold() >= price) {
+                        user.setGold(user.getGold() - price);
                         cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                         
                         user.setIngredients(user.getIngredients() + stoi(ing_input));
@@ -64,7 +67,7 @@ void Merchant::printInteraction(Game game, User user) {
                         break;
                     }
                     else {
-                        cout << "You could not afford " << ing_input << " kg of ingredients for " << stoi(ing_input) << " Gold." << 
+                        cout << "You could not afford " << ing_input << " kg of ingredients for " << price << " Gold." << 
                             "\nYou only have " << user.getGold() << " Gold. " << endl;
                         break;
                     }
@@ -84,9 +87,9 @@ void Merchant::printInteraction(Game game, User user) {
                     cout << "I have three different types of cookware, which one would you like to purchase?" << 
                         "\nEach one has a different probability of breaking after each use, marked with (XX%)." <<
                         "\n\nChoose one of the following:" <<
-                        "\n  1. (25%) Ceramic Pot [2 Gold]" <<
-                        "\n  2. (10%) Frying Pan [10 Gold]" <<
-                        "\n  3. (2%) Cauldron [20 Gold]" <<
+                        "\n  1. (25%) Ceramic Pot [" << (2 * price_multiplier_) << " Gold]" <<
+                        "\n  2. (10%) Frying Pan [" << (10 * price_multiplier_) << " Gold]" <<
+                        "\n  3. (2%) Cauldron [" << (20 * price_multiplier_) << " Gold]" <<
                            "\n  4. Cancel" << endl;
 
                     cin >> cookware_input;
@@ -104,13 +107,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << cookware_count << " Ceramic Pot(s) for " << (stoi(cookware_count) * 2) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(cookware_count) * 2) * price_multiplier_;
+
+                            cout << "You want to buy " << cookware_count << " Ceramic Pot(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(cookware_count) * 2)) {
-                                    user.setGold(user.getGold() - (stoi(cookware_count) * 2));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(cookware_count); i++) {
                                         Item cookware(0.25, 2, 1, "P"); // creates the ceramic pot item
@@ -119,7 +125,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << cookware_count << " Ceramic Pot(s) for " << (stoi(cookware_count) * 2) << " Gold." << 
+                                    cout << "You could not afford " << cookware_count << " Ceramic Pot(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -140,13 +146,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << cookware_count << " Frying Pan(s) for " << (stoi(cookware_count) * 10) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(cookware_count) * 10) * price_multiplier_;
+
+                            cout << "You want to buy " << cookware_count << " Frying Pan(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(cookware_count) * 10)) {
-                                    user.setGold(user.getGold() - (stoi(cookware_count) * 10));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(cookware_count); i++) {
                                         Item cookware(0.10, 10, 1, "F"); // creates the frying pan item
@@ -155,7 +164,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << cookware_count << " Frying Pan(s) for " << (stoi(cookware_count) * 10) << " Gold." << 
+                                    cout << "You could not afford " << cookware_count << " Frying Pan(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -176,13 +185,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << cookware_count << " Cauldron(s) for " << (stoi(cookware_count) * 20) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(cookware_count) * 20) * price_multiplier_;
+
+                            cout << "You want to buy " << cookware_count << " Cauldron(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(cookware_count) * 20)) {
-                                    user.setGold(user.getGold() - (stoi(cookware_count) * 20));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(cookware_count); i++) {
                                         Item cookware(0.02, 20, 1, "C"); // creates the cauldron item
@@ -191,7 +203,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << cookware_count << " Cauldron(s) for " << (stoi(cookware_count) * 20) << " Gold." << 
+                                    cout << "You could not afford " << cookware_count << " Cauldron(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -230,11 +242,11 @@ void Merchant::printInteraction(Game game, User user) {
                     break_loop = true;
 
                     cout << "\nChoose one of the following:" <<
-                        "\n  1. Stone Club [2 Gold]" <<
-                        "\n  2. Iron Spear [2 Gold]" <<
-                        "\n  3. (+1) Mythril Rapier [5 Gold]" <<
-                        "\n  4. (+2) Flaming Battle-Axe [15 Gold]" <<
-                        "\n  5. (+3) Vorpal Longsword [50 Gold]" <<
+                        "\n  1. Stone Club [" << (2 * price_multiplier_) << " Gold]" <<
+                        "\n  2. Iron Spear [" << (2 * price_multiplier_) << " Gold]" <<
+                        "\n  3. (+1) Mythril Rapier [" << (5 * price_multiplier_) << " Gold]" <<
+                        "\n  4. (+2) Flaming Battle-Axe [" << (15 * price_multiplier_) << " Gold]" <<
+                        "\n  5. (+3) Vorpal Longsword [" << (50 * price_multiplier_) << " Gold]" <<
                         "\n  6. Cancel" << endl;
 
                     cin >> weap_input;
@@ -252,13 +264,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << weap_count << " Stone Club(s) for " << (stoi(weap_count) * 2) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(weap_count) * 2) * price_multiplier_;
+
+                            cout << "You want to buy " << weap_count << " Stone Club(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(weap_count) * 2)) {
-                                    user.setGold(user.getGold() - (stoi(weap_count) * 2));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(2, 0, "C"); // creates the ceramic pot item
@@ -267,7 +282,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << weap_count << " Stone Club(s) for " << (stoi(weap_count) * 2) << " Gold." << 
+                                    cout << "You could not afford " << weap_count << " Stone Club(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -288,13 +303,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << weap_count << " Iron Spear(s) for " << (stoi(weap_count) * 2) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(weap_count) * 2) * price_multiplier_;
+
+                            cout << "You want to buy " << weap_count << " Iron Spear(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(weap_count) * 2)) {
-                                    user.setGold(user.getGold() - (stoi(weap_count) * 2));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(2, 0, "S"); // creates the ceramic pot item
@@ -303,7 +321,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << weap_count << " Iron Spear(s) for " << (stoi(weap_count) * 2) << " Gold." << 
+                                    cout << "You could not afford " << weap_count << " Iron Spear(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -324,13 +342,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << weap_count << " Mythril Rapier(s) for " << (stoi(weap_count) * 5) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(weap_count) * 5) * price_multiplier_;
+
+                            cout << "You want to buy " << weap_count << " Mythril Rapier(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(weap_count) * 5)) {
-                                    user.setGold(user.getGold() - (stoi(weap_count) * 5));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(5, 1, "R"); // creates the ceramic pot item
@@ -339,7 +360,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << weap_count << " Mythril Rapier(s) for " << (stoi(weap_count) * 5) << " Gold." << 
+                                    cout << "You could not afford " << weap_count << " Mythril Rapier(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -360,13 +381,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << weap_count << " Flaming Battle-Axe(s) for " << (stoi(weap_count) * 15) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(weap_count) * 15) * price_multiplier_;
+
+                            cout << "You want to buy " << weap_count << " Flaming Battle-Axe(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(weap_count) * 15)) {
-                                    user.setGold(user.getGold() - (stoi(weap_count) * 15));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(15, 2, "B"); // creates the ceramic pot item
@@ -375,7 +399,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << weap_count << " Flaming Battle-Axe(s) for " << (stoi(weap_count) * 15) << " Gold." << 
+                                    cout << "You could not afford " << weap_count << " Flaming Battle-Axe(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -396,13 +420,16 @@ void Merchant::printInteraction(Game game, User user) {
                                 cout << "You entered a 0 to cancel." << endl;
                                 break;
                             }
-                            cout << "You want to buy " << weap_count << " Vorpal Longsword(s) for " << (stoi(weap_count) * 50) << " Gold? (y/n)" << endl;
+
+                            price = (stoi(weap_count) * 50) * price_multiplier_;
+
+                            cout << "You want to buy " << weap_count << " Vorpal Longsword(s) for " << price << " Gold? (y/n)" << endl;
                             string YorN;
                             cin >> YorN;
 
                             if(YorN == "y") {
-                                if(user.getGold() >= (stoi(weap_count) * 50)) {
-                                    user.setGold(user.getGold() - (stoi(weap_count) * 50));
+                                if(user.getGold() >= price) {
+                                    user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(50, 3, "L"); // creates the ceramic pot item
@@ -411,7 +438,7 @@ void Merchant::printInteraction(Game game, User user) {
                                     break;
                                 }
                                 else {
-                                    cout << "You could not afford " << weap_count << " Vorpal Longsword(s) for " << (stoi(weap_count) * 50) << " Gold." << 
+                                    cout << "You could not afford " << weap_count << " Vorpal Longsword(s) for " << price << " Gold." << 
                                         "\nYou only have " << user.getGold() << " Gold. " << endl;
                                     break;
                                 }
@@ -440,7 +467,7 @@ void Merchant::printInteraction(Game game, User user) {
             case 4: // user wants to buy armor
             {
                 string armor_input;
-                cout << "How many suits of armor can I get you? (Enter a positive integer, or 0 to cancel):" << endl;
+                cout << "How many suits of armor can I get you? (Enter a positive integer, or 0 to cancel) [" << (5 * price_multiplier_) << " Gold each]:" << endl;
                 cin >> armor_input;
 
                 while(stoi(armor_input) < 0) {
@@ -454,14 +481,16 @@ void Merchant::printInteraction(Game game, User user) {
                     break;
                 }
 
-                cout << "You want to buy " << armor_input << " suits of armor for " << (stoi(armor_input) * 5) << " Gold? (y/n)" << endl;
+                price = (stoi(armor_input) * 5) * price_multiplier_;
+
+                cout << "You want to buy " << armor_input << " suits of armor for " << price << " Gold? (y/n)" << endl;
 
                 string YorN;
                 cin >> YorN;
 
                 if(YorN == "y") {
-                    if(user.getGold() >= (stoi(armor_input) * 5)) {
-                        user.setGold(user.getGold() - (stoi(armor_input) * 5));
+                    if(user.getGold() >= price) {
+                        user.setGold(user.getGold() - price);
                         cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                         
                         user.setArmor(user.getArmor() + (stoi(armor_input)));
@@ -469,7 +498,7 @@ void Merchant::printInteraction(Game game, User user) {
                         break;
                     }
                     else {
-                        cout << "You could not afford " << armor_input << " suits of amor for " << (stoi(armor_input) * 5) << " Gold." << 
+                        cout << "You could not afford " << armor_input << " suits of amor for " << price << " Gold." << 
                             "\nYou only have " << user.getGold() << " Gold. " << endl;
                         break;
                     }
@@ -485,11 +514,11 @@ void Merchant::printInteraction(Game game, User user) {
                 }
 
                 cout << "Each type of treasure is worth a different amount of gold, here are their values: " <<
-                    "\n  Silver Ring (R) - 10 gold pieces each" << 
-                    "\n  Ruby necklace (N) - 20 gold pieces each" << 
-                    "\n  Emerald bracelet (B) - 30 gold pieces each" << 
-                    "\n  Diamond circlet (C) - 40 gold pieces each" << 
-                    "\n  Gem-encrusted goblet (G) - 50 gold pieces each" << endl;
+                    "\n  Silver Ring (R) - " << (10 * price_multiplier_) << " gold pieces each" << 
+                    "\n  Ruby necklace (N) - " << (20 * price_multiplier_) << " gold pieces each" << 
+                    "\n  Emerald bracelet (B) - " << (30 * price_multiplier_) << " gold pieces each" << 
+                    "\n  Diamond circlet (C) - " << (40 * price_multiplier_) << " gold pieces each" << 
+                    "\n  Gem-encrusted goblet (G) - " << (50 * price_multiplier_) << " gold pieces each" << endl;
 
                 string treas_input;
                 bool found = false;
@@ -505,37 +534,42 @@ void Merchant::printInteraction(Game game, User user) {
 
                 for(int i = 0; i < user.getSellingTreasures().size(); i++) {
                     if(user.getSellingTreasures().at(i).getName() == treas_input  && treas_input == "R") {
+                        price = 10 * price_multiplier_;
                         user.removeTreasure(i);
-                        user.setGold(user.getGold() + 10);
-                        cout << "You just sold your Silver Ring for 10 Gold pieces, you now have " << user.getGold() << " Gold." << endl;
+                        user.setGold(user.getGold() + price);
+                        cout << "You just sold your Silver Ring for " << price << " Gold pieces, you now have " << user.getGold() << " Gold." << endl;
                         found = true;
                         i = user.getSellingTreasures().size();
                     }
                     else if(user.getSellingTreasures().at(i).getName() == treas_input && treas_input == "N") {
+                        price = 20 * price_multiplier_;
                         user.removeTreasure(i);
-                        user.setGold(user.getGold() + 20);
-                        cout << "You just sold your Ruby Necklace for 20 Gold pieces, you now have " << user.getGold() << " Gold." << endl;
+                        user.setGold(user.getGold() + price);
+                        cout << "You just sold your Ruby Necklace for " << price << " Gold pieces, you now have " << user.getGold() << " Gold." << endl;
                         found = true;
                         i = user.getSellingTreasures().size();
                     }
                     else if(user.getSellingTreasures().at(i).getName() == treas_input && treas_input == "B") {
+                        price = 30 * price_multiplier_;
                         user.removeTreasure(i);
-                        user.setGold(user.getGold() + 30);
-                        cout << "You just sold your Emerald Bracelet for 30 Gold pieces, you now have " << user.getGold() << " Gold." << endl;
+                        user.setGold(user.getGold() + price);
+                        cout << "You just sold your Emerald Bracelet for " << price << " Gold pieces, you now have " << user.getGold() << " Gold." << endl;
                         found = true;
                         i = user.getSellingTreasures().size();
                     }
                     else if(user.getSellingTreasures().at(i).getName() == treas_input && treas_input == "C") {
+                        price = 40 * price_multiplier_;
                         user.removeTreasure(i);
-                        user.setGold(user.getGold() + 40);
-                        cout << "You just sold your Diamond Circlet for 40 Gold pieces, you now have " << user.getGold() << " Gold." << endl;
+                        user.setGold(user.getGold() + price);
+                        cout << "You just sold your Diamond Circlet for " << price << " Gold pieces, you now have " << user.getGold() << " Gold." << endl;
                         found = true;
                         i = user.getSellingTreasures().size();
                     }
                     else if(user.getSellingTreasures().at(i).getName() == treas_input && treas_input == "G") {
+                        price = 30 * price_multiplier_;
                         user.removeTreasure(i);
-                        user.setGold(user.getGold() + 50);
-                        cout << "You just sold your Gem-Encrusted Goblet for 50 Gold pieces, you now have " << user.getGold() << " Gold." << endl;
+                        user.setGold(user.getGold() + price);
+                        cout << "You just sold your Gem-Encrusted Goblet for " << price << " Gold pieces, you now have " << user.getGold() << " Gold." << endl;
                         found = true;
                         i = user.getSellingTreasures().size();
                     }

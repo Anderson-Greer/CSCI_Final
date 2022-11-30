@@ -47,6 +47,7 @@ class User {
         vector<Item> addTreasure(Item); // add selling treasure to treasure vector
         vector<Item> removeTreasure(int); // remove selling treasure from treasure vector
         int addKey(); // adds a key to key count and returns the new number of keys
+        int increaseRoomsCleared(); // adds one to the number of rooms cleared
         int setFullness(int); // removes parameter health from health value
         int setAngerLevel(int); // sets the anger level
         int setGold(int); // sets the amount of gold

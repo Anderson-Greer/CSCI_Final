@@ -10,7 +10,6 @@ class Companion {
     private:
         string name_;
         int fullness_;
-        vector<Weapon> weapons_;
         bool armor_;
         
     public:
@@ -22,12 +21,10 @@ class Companion {
         string getName();
         int getAttack();
         int getFullness();
-        vector<Weapon> getWeapons();
-        bool getArmor();
+
         // setter functions
-        bool setArmor(bool);
+        void setName(string);
         int setFullness(int);
-        vector<Weapon> addWeapon(Weapon);
 };
 
 #endif

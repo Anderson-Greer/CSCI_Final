@@ -1,12 +1,25 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "User.h"
 #include <string>
 
 using namespace std;
 
 class Game {
+    private:
+        bool game_over_;
+
     public:
+        bool getGameOver();
+        bool setGameOver(bool);
+
+        void printDashedLine(); // prints a dashed line to be used in printStatus
+        void printCookware(User); // prints the number of each type of cookware, to be used in printStatus
+        void printWeapons(User); // prints the number of each type of weapon, to be used in printStatus
+        void printTreasures(User); // prints the number of each type of treasure, to be used in printStatus
+        void printStatus(User); // prints the status update
+        void printInventory(User); // prints the current inventory of the user
         void move(char); // handles the movement of the party
         void investigate(); // handles the investigation of a space
         // void fight(Monster); // handles picking a fight

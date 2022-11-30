@@ -63,11 +63,7 @@ int main() {
         }
         // game continues
         else {
-            char direction;
-            cout << "Enter a direction you would like to move [w for up, s for down," <<
-                " a for left, and d for right]" << endl;
-            cin >> direction;
-            map.move(direction);
+            user.runPlayerAction(map);
 
             map.displayMap();
         }

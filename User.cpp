@@ -137,14 +137,42 @@ int User::setIngredients(int ingredients) {
 }
 
 void User::runPlayerAction(Map map) {
+    srand((unsigned) time(NULL));
+
+    string input;
     cout << "\nPlease choose one of the following: " <<
-            "\n  1. Move" <<
+            "\n  1. Move a single space in any direction, 20% chance fullness of any party member drops by 1." <<
             "\n  2. Investigate, explore an unexplored space. [10% chance you find a key, " <<
                 "20% chance you find treasure, or 20% chance you must fight a random monster]" <<
-            "\n  3. Weapons: It's dangerous to go alone, take this!" <<
-            "\n  4. Armor: If you want to survive monster attacks, you will need some armor." <<
-            "\n  5. Sell treasures: If you find anything shiny, I would be happy to take it off your hands." <<
-            "\n  6. Leave: Make sure you get everything you need, I'm leaving after this sale!" << endl;
+            "\n  3. Pick a fight and cause a random monster to appear. Defeating a monster has a" <<
+                " 10% chance of dropping a key." <<
+            "\n  4. Cook and Eat using current ingredients and cookware." <<
+            "\n  5. Give up and end the game." << endl;
+    cin >> input;
+
+    switch(stoi(input)) {
+        case 1:
+        {
+            char direction;
+            cout << "Enter a direction you would like to move [w for up, s for down," <<
+                " a for left, and d for right]" << endl;
+            cin >> direction;
+            map.move(direction);
+
+            int rand_num = 1 + rand() % 100;
+            if(rand_num <= 20) {
+                fullness_--;
+                cout << "You lost 1 fullness from moving." << endl;
+            }
+            for(int i = 0; i < 4; i++) {
+                rand_num = 1 + rand() % 100;
+                if(rand_num <= 20) {
+                    companions_.at(i).setFullness(companions_.at(i).getFullness() - 1);
+                    cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
+                }
+            }
+        }
+    }
 }
 
 /*

@@ -22,6 +22,12 @@ class Item {
         int getCost();
         int getAmount();
         string getName();
+
+        // setter functions
+        double setChance(double);
+        int setCost(int);
+        int setAmount(int);
+        string setName(string);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "Game.h"
 
@@ -107,7 +108,9 @@ void Game::printStatus(User user) { // prints status update
     printDashedLine();
     cout << "| PARTY       |" << endl;
     printDashedLine();
+    cout << "| " << user.getName() << " | Fullness: " << user.getFullness() << endl;
     
+    cout << "| " << user.getName() << " | Fullness: " << user.getFullness() << endl;
     for(int i = 0; i < user.getCompanions().size(); i++) {
         Companion compy = user.getCompanions().at(i);
         cout << "| " << compy.getName() << " | Fullness: " << compy.getFullness() << endl;
@@ -132,6 +135,8 @@ void Game::printInventory(User user) { // prints status update
 }
 
 /*
+<<<<<<< Updated upstream
+=======
     1. Check to make sure movement is valid
     2. If direction is valid, move the party using the map class and it's current position
     3. North: increase row by 1, South: decrease row by 1, West: increase column by 1, East: decrease column by 1
@@ -141,7 +146,90 @@ void Game::move(char direction) { // handles the movement of the party
 
 }
 
+// split function
+int split(string input_string, char separator, string arr[], int arr_size)
+{   
+    int count = 0;          // declare variables used in for loop
+    int place = 0;
+    arr[0] = input_string;
+    
+    if (input_string.length() == 0)     // input validation
+    {
+        return 0;
+    }
+
+    for (int i = 0; i <= input_string.length(); i++)
+    {
+        if (input_string[i] == separator)       // checks if char == separator
+        {
+            arr[count] = input_string.substr(place, i - place);     // populates array with correct substring
+            count++;            // increments array index
+            place = i + 1;      // updates place value so next string starts at correct spot
+            
+            if (count >= arr_size)      // checks if array is at capacity
+            {
+                return -1;
+            }
+        }
+    }
+    arr[count] = input_string.substr(place, input_string.length() - place);     // populates last array spot
+    
+    return count + 1;
+}
+
+void Game::printNPCinteraction() // prints NPC space action menu
+{
+    string input;
+    cout << "Your party has encountered an NPC!\n" << endl;
+    cout << "Please choose one of the following: \n";
+    cout << "  1. Move \n";
+    cout << "  2. Speak to NPC \n";
+    cout << "  3. Give up \n";
+
+    cin >> input;
+
+    switch (stoi(input))
+    {
+        /*case 1: 
+        {
+
+        }*/
+
+        case 2: 
+        {
+            string line;
+            vector<string> riddleVect;
+            ifstream riddles("riddles.txt");
+
+            cout << "The NPC is willing to offer you help, but you must solve this riddle first:" << endl;
+
+            while (getline(riddles, line))
+            {
+                riddleVect.push_back(line);
+            }
+
+            int random = rand % riddleVect.size();
+            string riddle = riddleVect[random];
+            split(riddle, '~', arr, 2);
+
+            cout << arr[0] << endl;
+            cin >> input;
+
+            if (input == arr[1])
+            {
+                Merchant NPC(user);
+                NPC.printInteraction(game, user);
+            }
+
+            map.removeNPC(getPlayerRow(), getPlayerCol());
+        }
+    }
+
+
+}
+
 /*
+>>>>>>> Stashed changes
     1. Check if space is already explored or not
     2. If it is, tell player to choose something else, if not, continue function
     3. Run random number, 10% chance player finds key, 20% chance player finds treasure, 20% chance player has to fight random monster

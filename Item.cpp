@@ -32,3 +32,23 @@ int Item::getAmount() {
 string Item::getName() {
     return name_;
 }
+
+double Item::setChance(double chance) {
+    chance_ = chance;
+    return chance_;
+}
+
+int Item::setCost(int cost) {
+    cost_ = cost;
+    return cost_;
+}
+
+int Item::setAmount(int amount) {
+    amount_ = amount;
+    return amount_;
+}
+
+string Item::setName(string name) {
+    name_ = name;
+    return name_;
+}

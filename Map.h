@@ -1,7 +1,5 @@
-    #ifndef MAP_H
+#ifndef MAP_H
 #define MAP_H
-
-#include <iostream>
 
 using namespace std;
 
@@ -48,6 +46,7 @@ public:
     bool isExplored(int row, int col);
     bool isFreeSpace(int row, int col);
     bool isDungeonExit(int row, int col);
+    bool isPlayerPosition(int row, int col);
 
     // setters
     void setPlayerPosition(int row, int col);
@@ -61,6 +60,7 @@ public:
     bool removeNPC(int row, int col);
     bool removeRoom(int row, int col);
     void exploreSpace(int row, int col);
+    void createMap();
 };
 
 #endif

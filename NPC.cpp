@@ -44,9 +44,12 @@ int NPC::split(string input_string, char separator, string arr[], int arr_size)
 }
 
 
-void NPC::printNPCinteraction(User user, Map map)
+void NPC::printNPCinteraction(User user, Map &map)
 {
     string input;
+    int rand_num;
+    int fullness = user.getFullness();
+    vector<Companion> companions = user.getCompanions();
     cout << "Your party has encountered an NPC!\n" << endl;
     cout << "Please choose one of the following: \n";
     cout << "  1. Move \n";
@@ -57,10 +60,33 @@ void NPC::printNPCinteraction(User user, Map map)
 
     switch (stoi(input))
     {
-        /*case 1: 
+        case 1: 
         {
+            char direction;
+            cout << "Enter a direction you would like to move [w for up, s for down," <<
+                " a for left, and d for right]" << endl;
+            cin >> direction;
+            map.move(direction);
 
-        }*/
+            rand_num = 1 + rand() % 100;
+            if(rand_num <= 20) {
+                fullness--;
+                cout << "You lost 1 fullness from moving." << endl;
+            }
+            for(int i = 0; i < 4; i++) {
+                rand_num = 1 + rand() % 100;
+                if(rand_num <= 20) {
+                    companions.at(i).setFullness(companions.at(i).getFullness() - 1);
+                    cout << companions.at(i).getName() << " lost 1 fullness from moving." << endl;
+                }
+            }
+            if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                NPC npc;
+                npc.printNPCinteraction(user, map);
+            }
+            break;
+        }
 
         case 2: 
         {
@@ -84,15 +110,33 @@ void NPC::printNPCinteraction(User user, Map map)
             {
                 cout << arr[0] << endl;
                 cin >> input;
+                string answer = arr[1];
+                bool sim = true;
 
-                if (arr[1] == input)
+                if (input.length() == answer.length())
                 {
-                    Merchant NPC(user);
-                    NPC.printInteraction(user);
+                    for (int i = 0; i < input.length(); i++)
+                    {
+                        if (input[i] != answer[i])
+                        {
+                            sim = false;
+                            break;
+                        }
+                    }
+
+                    if (sim)
+                    {
+                        Merchant NPC(user);
+                        NPC.printInteraction(user);
+                    }
+                    else
+                    {
+                        cout << "Wrong answer, buddy! Now you feel my wrath!" << endl;
+                    }
                 }
                 else
                 {
-                    cout << "error" << endl;
+                    cout << "Wrong answer, buddy! Now you feel my wrath!" << endl;
                 }
             }
             map.removeNPC(map.getPlayerRow(), map.getPlayerCol());

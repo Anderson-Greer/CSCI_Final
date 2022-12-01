@@ -204,6 +204,11 @@ void User::runPlayerAction(Map &map, User user) {
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
+            if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                NPC npc;
+                npc.printNPCinteraction(user, map);
+            }
             break;
         }
 
@@ -226,11 +231,6 @@ void User::runPlayerAction(Map &map, User user) {
                 }
                 else
                     cout << "You found nothing." << endl;
-            }
-            else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())) {
-                // TODO: run NPC interaction
-                NPC npc;
-                npc.printNPCinteraction(user, map);
             }
             else
                 cout << "This space is already explored, choose another action." << endl;
@@ -318,6 +318,23 @@ void User::runPlayerAction(Map &map, User user) {
                 }
             }
         }
+
+        /*
+        case 5:
+        {
+            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
+
+            string YorN;
+            cin >> YorN;
+
+            if (YorN == "y")
+            {
+                cout << "Alright :(, it was a good game while it lasted..." << endl;
+                user.setGameOver(true);
+            }
+            break;
+        }
+        */
     }
 }
 

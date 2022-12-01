@@ -67,7 +67,7 @@ class User {
         void printInventory(); // prints the current inventory of the user
         void runPlayerAction(Map&, User&); // goes through a player action
         void bubbleSortWeapons(vector<Weapon>);
-        void misfortune(); // runs through the chance of getting a misfortune and then what happens if one does occur
+        void misfortune(bool); // runs through the chance of getting a misfortune and then what happens if one does occur
         void bubbleSortWeapons();
 };
 

@@ -177,14 +177,90 @@ int User::setIngredients(int ingredients) {
     return ingredients;
 }
 
-void User::misfortune() { // runs through the chance of getting a misfortune and then what happens if one does occur
+void User::misfortune(bool is_room) { // runs through the chance of getting a misfortune and then what happens if one does occur
     int rand_num = 1 + rand() % 100;
 
-    if(rand_num <= 40) {
-        rand_num = 1 + rand() % 100;
+    if(rand_num <= 40) { // runs if misfortune happens
+        int rand_num = 1 + rand() % 100;
 
-        if(rand_num <= 30) {
+        if(rand_num <= 30) { // chance that party is robbed
             cout << "OH NO! You were just robbed by rats!!" << endl;
+            int chance = 1 + rand() % 100;
+            if(chance <= 33 && cookware_.size() > 0) {
+                cout << "You lost 1 " << cookware_.at(cookware_.size() - 1).getName() << "!" << endl;
+                cookware_.pop_back();
+                return;
+            }
+            else if(chance <= 66 && armor_ > 0) {
+                cout << "You lost 1 piece of armor." << endl;
+                armor_--;
+                return;
+            }
+            else {
+                cout << "You lost up to 10 ingredients." << endl;
+                if(ingredients_ >= 10) {
+                    ingredients_ -= 10;
+                }
+                else {
+                    ingredients_ = 0;
+                }
+            }
+        }
+        else if(rand_num > 30 && rand_num <= 40) {
+            int chance = 1 + rand() % 100;
+            if(chance <= 50 && armor_ > 0) { // armor broke
+                cout << "OH NO! You lost a set of armor." << endl;
+                armor_--;
+            }
+            else { // weapon broke
+                int index = rand() % (weapons_.size() - 1);
+                cout << "OH NO! Your " << weapons_.at(index).getName() << " broke." << endl;
+                weapons_.erase(weapons_.begin() + index);
+            }
+        }
+        else if(rand_num > 40 && rand_num <= 70) { // food poisoning
+            int rand_character = 1 + rand() % (companions_.size() - 1);
+            if(rand_character = 1) {
+                fullness_ -= 10;
+                cout << "OH NO! You lost 10 fullness by misfortune." << endl;
+                if(fullness_ <= 0) {
+                    setGameOver(true);
+                    cout << "You starved. GAME OVER." << endl;
+                    return;
+                }
+            }
+            else {
+                companions_.at(rand_character).setFullness(companions_.at(rand_character).getFullness() - 10);
+                cout << "OH NO! " << companions_.at(rand_character).getName() << " lost 10 fullness." << endl;
+
+                if(companions_.at(rand_character).getFullness() <= 0) {
+                    cout << "Uh oh, it appears as if " << companions_.at(rand_character).getName() << " starved." << endl;
+                    companions_.erase(companions_.begin() + rand_character);
+
+                    if(companions_.size() == 0) {
+                        cout << "It looks like all your companions peacefully passed away. GAME OVER." << endl;
+                        setGameOver(true);
+                        return;
+                    }
+                }
+            }
+        }
+        if(rand_num > 70 && rand_num <= 100 && is_room) {
+            int rand_character;
+            if(companions_.size() > 1) {
+                rand_character = rand() % (companions_.size() - 1);
+            }
+            else
+                rand_character = 0;
+            cout << "OH NO! Your companion " << companions_.at(rand_character).getName() << " is trapped in the previous room and " <<
+                "is unable to get through. You must continue without them." << endl;
+            companions_.erase(companions_.begin() + rand_character);
+            cout << "Your party size has reduced to " << companions_.size() << endl;
+            if(companions_.size() == 0) {
+                cout << "It looks like all your companions peacefully passed away. GAME OVER." << endl;
+                setGameOver(true);
+                return;
+            }
         }
     }
 }
@@ -225,11 +301,7 @@ void User::runPlayerAction(Map &map, User &user) {
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
-            if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
-            {
-                NPC npc;
-                npc.printNPCinteraction(user, map);
-            }
+
             break;
         }
 
@@ -253,6 +325,10 @@ void User::runPlayerAction(Map &map, User &user) {
                 else
                     cout << "You found nothing." << endl;
             }
+            else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())) {
+                NPC npc;
+                npc.printNPCinteraction(user, map);
+            }
             else
                 cout << "This space is already explored, choose another action." << endl;
 
@@ -268,7 +344,8 @@ void User::runPlayerAction(Map &map, User &user) {
                     cout << companions_.at(i).getName() << " lost 1 fullness from investigating." << endl;
                 }
             }
-
+            
+            misfortune(false);
             break;
         }
 
@@ -276,6 +353,7 @@ void User::runPlayerAction(Map &map, User &user) {
         {
             cout << "You're getting cocky!" << endl;
             // TODO: run monster fight
+            misfortune(false);
         }
 
         case 4:
@@ -295,9 +373,6 @@ void User::runPlayerAction(Map &map, User &user) {
                 cout << endl;
                 cin >> cook_input;
 
-                cout << "For every 5 ingredients used, each party member gains 1 fullness.\nHow many ingredients would you like to use?" << endl;
-                cin >> amount_input;
-
                 for(int i = 0; i < cookware_.size(); i++) {
                     if(cookware_.at(i).getName() == cook_input  && cook_input == "P") {
                         index = i;
@@ -316,6 +391,9 @@ void User::runPlayerAction(Map &map, User &user) {
                         flag = false;
                     }
                 }
+
+                cout << "For every 5 ingredients used, each party member gains 1 fullness.\nHow many ingredients would you like to use?" << endl;
+                cin >> amount_input;
                 
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= cookware_.at(index).getChance() * 100) {
@@ -340,6 +418,8 @@ void User::runPlayerAction(Map &map, User &user) {
                     cout << "| Ingredients remaining: " << ingredients_ << endl;
                 }
             }
+
+            misfortune(false);
             break;
         }
 
@@ -354,25 +434,10 @@ void User::runPlayerAction(Map &map, User &user) {
                 cout << "Alright :(, it was a good game while it lasted..." << endl;
                 user.setGameOver(true);
             }
+
+            misfortune(false);
             break;
         }
-
-        /*
-        case 5:
-        {
-            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
-
-            string YorN;
-            cin >> YorN;
-
-            if (YorN == "y")
-            {
-                cout << "Alright :(, it was a good game while it lasted..." << endl;
-                user.setGameOver(true);
-            }
-            break;
-        }
-        */
     }
 }
 

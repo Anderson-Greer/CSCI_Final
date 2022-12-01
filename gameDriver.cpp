@@ -15,6 +15,7 @@
 using namespace std;
 
 int main() {
+    srand((unsigned) time(NULL));
 
     // create the user
     string player_name;

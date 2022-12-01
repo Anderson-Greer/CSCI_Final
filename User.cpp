@@ -260,6 +260,8 @@ void User::runPlayerAction(Map &map, Game game, User user) {
         case 4:
         {   
             bool flag = false;
+            int index;
+            
             while(!flag) {
                 flag = true;
 
@@ -272,23 +274,20 @@ void User::runPlayerAction(Map &map, Game game, User user) {
                 cout << endl;
                 cin >> cook_input;
 
-                cout << "For each 5 ingredients used, each party member gains 1 fullness.\nHow many ingredients would you like to use?" << endl;
+                cout << "For every 5 ingredients used, each party member gains 1 fullness.\nHow many ingredients would you like to use?" << endl;
                 cin >> amount_input;
 
                 for(int i = 0; i < cookware_.size(); i++) {
                     if(cookware_.at(i).getName() == cook_input  && cook_input == "P") {
-                        rand_num = 1 + rand() % 100;
-                        if(rand_num < 10) {
-
-                        }
+                        index = i;
                         i = cookware_.size();
                     }
                     else if(cookware_.at(i).getName() == cook_input && cook_input == "F") {
-                        
+                        index = i;
                         i = cookware_.size();
                     }
                     else if(cookware_.at(i).getName() == cook_input && cook_input == "C") {
-                        
+                        index = i;
                         i = cookware_.size();
                     }
                     else {
@@ -296,9 +295,142 @@ void User::runPlayerAction(Map &map, Game game, User user) {
                         flag = false;
                     }
                 }
+                rand_num = 1 + rand() % 100;
+                if(rand_num <= cookware_.at(index).getChance() * 100) {
+                    cout << "The cookware broke! You lost " << (stoi(amount_input) - (stoi(amount_input) % 5)) << " ingredients and the cookware." << endl;
+                    ingredients_ -= stoi(amount_input) - (stoi(amount_input) % 5);
+                    cookware_.erase(cookware_.begin() + index);
+                }
+                else {
+                    cout << "You cooked a meal successfully! Each member in your party gained " << (stoi(amount_input) / 5) << " fullness." << endl;
+                    ingredients_ -= stoi(amount_input) - (stoi(amount_input) % 5);
+                    fullness_ += (stoi(amount_input) / 5);
+                    for(int j = 0; companions_.size(); j++) {
+                        companions_.at(j).setFullness(companions_.at(j).getFullness() + (stoi(amount_input) / 5));
+                    }
+
+                    cout << "| " << name_ << " | Fullness: " << fullness_ << endl;
+                    for(int i = 0; i < companions_.size(); i++) {
+                        Companion compy = companions_.at(i);
+                        cout << "| " << compy.getName() << " | Fullness: " << compy.getFullness() << endl;
+                    }
+                    cout << "| Ingredients | " << ingredients_ << endl;
+                }
             }
         }
     }
+}
+
+void User::printDashedLine() { // prints dashed line: +-------------+
+    cout << "+-------------+" << endl;
+}
+
+void User::printCookware() { // prints the number of each type of cookware i.e.: P: 1 | F: 0 | C: 2
+    int ceramic_pots = 0;
+    int pans = 0;
+    int cauldrons = 0; 
+
+    for(int i = 0; i < cookware_.size(); i++) {
+        if(cookware_.at(i).getName() == "P")
+            ceramic_pots++;
+        else if(cookware_.at(i).getName() == "F")
+            pans++;
+        else if(cookware_.at(i).getName() == "C")
+            cauldrons++;
+    }
+
+    cout << "P: " << ceramic_pots << " | F: " << pans << " | C: " << cauldrons << endl; 
+}
+
+void User::printWeapons() { // prints the number of each type of weapon i.e.: C: 1 | S: 2 | R: 1 | B: 0 | L: 1
+    int clubs = 0;
+    int spears = 0;
+    int rapiers = 0;
+    int battle_axe = 0;
+    int longsword = 0; 
+
+    for(int i = 0; i < weapons_.size(); i++) {
+        if(weapons_.at(i).getName() == "C")
+            clubs++;
+        else if(weapons_.at(i).getName() == "S")
+            spears++;
+        else if(weapons_.at(i).getName() == "R")
+            rapiers++;
+        else if(weapons_.at(i).getName() == "B")
+            battle_axe++;
+        else if(weapons_.at(i).getName() == "L")
+            longsword++;
+    }
+
+    cout << "C: " << clubs << " | S: " << spears << " | R: " << rapiers << " | B: " << battle_axe << " | L: " << longsword << endl; 
+}
+
+void User::printTreasures() { // prints the number of each type of treasure i.e.: R: 1 | N: 0 | B: 0 | C: 0 | G: 0
+    int ring = 0;
+    int necklace = 0;
+    int bracelet = 0;
+    int circlet = 0;
+    int goblet = 0;
+
+    for(int i = 0; i < selling_treasures_.size(); i++) {
+        if(selling_treasures_.at(i).getName() == "R")
+            ring++;
+        else if(selling_treasures_.at(i).getName() == "N")
+            necklace++;
+        else if(selling_treasures_.at(i).getName() == "B")
+            bracelet++;
+        else if(selling_treasures_.at(i).getName() == "C")
+            circlet++;
+        else if(selling_treasures_.at(i).getName() == "G")
+            goblet++;
+    }
+
+    cout << "R: " << ring << " | N: " << necklace << " | B: " << bracelet << " | C: " << circlet << " | G: " << goblet << endl; 
+}
+
+void User::printStatus() { // prints status update
+    printDashedLine();
+    cout << "| STATUS      |" << endl;
+    printDashedLine();
+    cout << "| Rooms Cleared: " << rooms_cleared_ << " | Keys: " << keys_ << " | Anger Level: " << anger_level_ << endl;
+    printDashedLine();
+    cout << "| INVENTORY   |" << endl;
+    printDashedLine();
+    cout << "| Gold        | " << gold_ << endl;
+    cout << "| Ingredients | " << ingredients_ << endl;
+    cout << "| Cookware    | ";
+    printCookware();
+    cout << "| Weapons     | ";
+    printWeapons();
+    cout << "| Armor       | " << armor_ << endl;
+    cout << "| Treasures   | ";
+    printTreasures();
+    printDashedLine();
+    cout << "| PARTY       |" << endl;
+    printDashedLine();
+    
+    cout << "| " << name_ << " | Fullness: " << fullness_ << endl;
+    for(int i = 0; i < companions_.size(); i++) {
+        Companion compy = companions_.at(i);
+        cout << "| " << compy.getName() << " | Fullness: " << compy.getFullness() << endl;
+    }
+
+    printDashedLine();
+}
+
+void User::printInventory() { // prints status update
+    printDashedLine();
+    cout << "| INVENTORY   |" << endl;
+    printDashedLine();
+    cout << "| Gold        | " << gold_ << endl;
+    cout << "| Ingredients | " << ingredients_ << endl;
+    cout << "| Cookware    | ";
+    printCookware();
+    cout << "| Weapons     | ";
+    printWeapons();
+    cout << "| Armor       | " << armor_ << endl;
+    cout << "| Treasures   | ";
+    printTreasures();
 }
 
 /*

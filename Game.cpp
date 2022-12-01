@@ -14,11 +14,7 @@ bool Game::setGameOver(bool status) {
     game_over_ = status;
     return game_over_;
 }
-
 /*
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
     1. Check to make sure movement is valid
     2. If direction is valid, move the party using the map class and it's current position
     3. North: increase row by 1, South: decrease row by 1, West: increase column by 1, East: decrease column by 1
@@ -26,37 +22,6 @@ bool Game::setGameOver(bool status) {
 */
 void Game::move(char direction) { // handles the movement of the party
 
-}
-
-// split function
-int Game::split(string input_string, char separator, string arr[], int arr_size)
-{   
-    int count = 0;          // declare variables used in for loop
-    int place = 0;
-    arr[0] = input_string;
-    
-    if (input_string.length() == 0)     // input validation
-    {
-        return 0;
-    }
-
-    for (int i = 0; i <= input_string.length(); i++)
-    {
-        if (input_string[i] == separator)       // checks if char == separator
-        {
-            arr[count] = input_string.substr(place, i - place);     // populates array with correct substring
-            count++;            // increments array index
-            place = i + 1;      // updates place value so next string starts at correct spot
-            
-            if (count >= arr_size)      // checks if array is at capacity
-            {
-                return -1;
-            }
-        }
-    }
-    arr[count] = input_string.substr(place, input_string.length() - place);     // populates last array spot
-    
-    return count + 1;
 }
 
 /*

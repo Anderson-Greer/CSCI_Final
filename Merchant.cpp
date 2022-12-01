@@ -10,7 +10,7 @@ Merchant::Merchant(User user)
     price_multiplier_ = 1 + (0.25 * user.getRoomsCleared());
 }
 
-void Merchant::printInteraction(Game game, User user) {
+void Merchant::printInteraction(Game game, User &user) {
     string input;
     int price;
     bool end = false;
@@ -20,7 +20,7 @@ void Merchant::printInteraction(Game game, User user) {
 
     while(!end) {
 
-        game.printInventory(user);
+        user.printInventory();
 
         cout << "\nPlease choose one of the following: " <<
             "\n  1. Ingredients: To make food, you have to cook raw ingredients." <<

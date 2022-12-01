@@ -356,23 +356,6 @@ void User::runPlayerAction(Map &map, User &user) {
             }
             break;
         }
-
-        /*
-        case 5:
-        {
-            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
-
-            string YorN;
-            cin >> YorN;
-
-            if (YorN == "y")
-            {
-                cout << "Alright :(, it was a good game while it lasted..." << endl;
-                user.setGameOver(true);
-            }
-            break;
-        }
-        */
     }
 }
 

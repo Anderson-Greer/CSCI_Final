@@ -526,6 +526,7 @@ bool Map::move(char direction)
     {
         exploreSpace(player_position_[0], player_position_[1]);
     }
+
     return true;
 }
 

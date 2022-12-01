@@ -11,7 +11,7 @@ class NPC
         NPC();
 
         int split(string, char, string[], int);
-        void printNPCinteraction(User, Map&);
+        void printNPCinteraction(User&, Map&);
 };
 
 #endif

@@ -609,6 +609,7 @@ void Map::createMap() {
         do {
             rand_x = rand() % num_cols_;
             rand_y = rand() % num_rows_;
+            cout << rand_x << " " << rand_y << endl;
         } while(rand_x == 0 && rand_y == 0);
 
         if(isFreeSpace(rand_x, rand_y)) {

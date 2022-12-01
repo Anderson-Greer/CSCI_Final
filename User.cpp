@@ -168,7 +168,7 @@ int User::setIngredients(int ingredients) {
     return ingredients;
 }
 
-void User::runPlayerAction(Map &map, Game game, User user) {
+void User::runPlayerAction(Map &map, User user) {
     srand((unsigned) time(NULL));
     int rand_num;
 
@@ -230,7 +230,7 @@ void User::runPlayerAction(Map &map, Game game, User user) {
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())) {
                 // TODO: run NPC interaction
                 NPC npc;
-                npc.printNPCinteraction(game, user, map);
+                npc.printNPCinteraction(user, map);
             }
             else
                 cout << "This space is already explored, choose another action." << endl;

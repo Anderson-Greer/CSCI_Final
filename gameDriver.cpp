@@ -45,12 +45,12 @@ int main() {
         "\nBut beware, some of the merchants in this dungeon are shady characters, and they won\'t always give you a fair price..." << endl;
 
     Merchant merchant(user); // create starting merchant
-    merchant.printInteraction(game, user); 
+    merchant.printInteraction(user); 
 
     Map map; // create the map
     map.createMap();
     map.displayMap();
-    map.addNPC(1,1);
+    
 
     while(!game.getGameOver()) {
         // game ends from angry sorceror, player loses
@@ -66,7 +66,7 @@ int main() {
         }
         // game continues
         else {
-            user.runPlayerAction(map, game, user);
+            user.runPlayerAction(map, user);
 
             map.displayMap();
         }

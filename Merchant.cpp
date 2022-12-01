@@ -10,7 +10,7 @@ Merchant::Merchant(User user)
     price_multiplier_ = 1 + (0.25 * user.getRoomsCleared());
 }
 
-void Merchant::printInteraction(Game game, User &user) {
+void Merchant::printInteraction(User &user) {
     string input;
     int price;
     bool end = false;

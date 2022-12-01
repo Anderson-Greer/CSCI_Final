@@ -62,7 +62,7 @@ class User {
         void printTreasures(); // prints the number of each type of treasure, to be used in printStatus
         void printStatus(); // prints the status update
         void printInventory(); // prints the current inventory of the user
-        void runPlayerAction(Map&); // goes through a player action
+        void runPlayerAction(Map&, User); // goes through a player action
         void bubbleSortWeapons(vector<Weapon>);
         void bubbleSortWeapons();
 };

@@ -23,7 +23,7 @@ class Merchant {
         
 
         // other functions
-        void printInteraction(Game, User&);
+        void printInteraction(User&);
 };
 
 #endif

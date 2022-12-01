@@ -14,9 +14,8 @@ class Game {
         bool getGameOver();
         bool setGameOver(bool);
 
-        void investigate(); // handles the investigation of a space
+        int split(string, char, string[], int);
         // void fight(Monster); // handles picking a fight
-        void cookAndEat(Item, double); // handles cooking and eating ingredients
         void giveUp(); // handles giving up
 };
 

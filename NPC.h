@@ -10,7 +10,8 @@ class NPC
     public:
         NPC();
 
-        void printNPCinteraction(Game, User, Map);
+        int split(string, char, string[], int);
+        void printNPCinteraction(User, Map);
 };
 
 #endif

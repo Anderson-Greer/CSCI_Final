@@ -515,6 +515,20 @@ void User::printRoomInteraction(User &user, Map &map)
                     cin >> input;
                     doorChoice = rand() % 3 + 1;
 
+                    if (stoi(input) == 1)
+                        cout << "Your choice: Boulder" << endl;
+                    else if (stoi(input) == 2)
+                        cout << "Your choice: Parchment" << endl;
+                    else if (stoi(input) == 3)
+                        cout << "Your choice: Shears" << endl;
+
+                    if (doorChoice == 1)
+                        cout << "Door's choice: Boulder" << endl;
+                    else if (doorChoice == 2)
+                        cout << "Door's choice: Parchment" << endl;
+                    else if (doorChoice == 3)
+                        cout << "Door's choice: Shears" << endl;
+
                     if ((stoi(input) == 1 && doorChoice == 2) || (stoi(input) == 2 && doorChoice == 3) || (stoi(input) == 3 && doorChoice == 1))
                     {
                         int index = rand() % companions_.size();

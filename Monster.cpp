@@ -107,7 +107,7 @@ void Monster::fightMonster(User user) {
                             w += user.getWeapons().at(i).getDamage();
                         }
                     }
-                    int d;
+                    int d; // FIGURE OUT WHAT TO SET THIS VARIABLE TO
                     int a = user.getArmor();
                     int c = stoi(split_arr[1]);
                     int r1 = 1 + rand() % 6;

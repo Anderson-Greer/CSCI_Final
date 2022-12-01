@@ -56,12 +56,9 @@ class User {
         int setArmor(int); // stores the number of sets of armor the party holds
 
         // other functions
-<<<<<<< Updated upstream
-        void runPlayerAction(Map&); // goes through a player action
+        void runPlayerAction(Map&, Game, User); // goes through a player action
         void bubbleSortWeapons(vector<Weapon>);
-=======
         void bubbleSortWeapons();
->>>>>>> Stashed changes
 };
 
 #endif

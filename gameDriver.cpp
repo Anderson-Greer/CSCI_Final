@@ -6,10 +6,12 @@
 #include "Weapon.cpp"
 #include "Companion.cpp"
 #include "Map.cpp"
+#include "Merchant.cpp"
 #include "Game.cpp"
 #include "User.cpp"
 #include "Monster.cpp"
-#include "Merchant.cpp"
+#include "NPC.cpp"
+
 
 using namespace std;
 
@@ -48,11 +50,12 @@ int main() {
     Map map; // create the map
     map.createMap();
     map.displayMap();
+    map.addNPC(1,1);
 
     while(!game.getGameOver()) {
         // game ends from angry sorceror, player loses
         if(user.getAngerLevel() >= 100) {
-            cout << "You made the sorceror too angry, he reached an anger level of 100." <<
+            cout << "You made the sorceror too angry. He reached an anger level of 100, and opened a portal to hell under your feet." <<
                 "\nGAME OVER" << endl;
             game.setGameOver(true);
         }
@@ -63,7 +66,7 @@ int main() {
         }
         // game continues
         else {
-            user.runPlayerAction(map);
+            user.runPlayerAction(map, game, user);
 
             map.displayMap();
         }
@@ -118,13 +121,12 @@ int main() {
     // user.increaseRoomsCleared();
     // user.increaseRoomsCleared();
 
-<<<<<<< Updated upstream
+
     // game.printStatus(user);
 
     // Merchant merchant(user);
 
     // merchant.printInteraction(game, user);
-=======
     merchant.printInteraction(game, user);
 
 
@@ -145,8 +147,6 @@ int main() {
     {
         cout << user.getWeapons().at(i).getDamage() << endl;
     }
-    
->>>>>>> Stashed changes
     
 
     // // testing Monster class

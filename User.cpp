@@ -1,4 +1,5 @@
 #include <string>
+#include "NPC.h"
 #include "User.h"
 
 using namespace std;
@@ -167,7 +168,7 @@ int User::setIngredients(int ingredients) {
     return ingredients;
 }
 
-void User::runPlayerAction(Map &map) {
+void User::runPlayerAction(Map &map, Game game, User user) {
     srand((unsigned) time(NULL));
     int rand_num;
 
@@ -228,6 +229,8 @@ void User::runPlayerAction(Map &map) {
             }
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())) {
                 // TODO: run NPC interaction
+                NPC npc;
+                npc.printNPCinteraction(game, user, map);
             }
             else
                 cout << "This space is already explored, choose another action." << endl;

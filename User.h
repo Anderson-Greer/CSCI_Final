@@ -20,6 +20,7 @@ class User {
         int anger_level_;
         int gold_;
         int ingredients_;
+        bool game_over_;
 
     public:
         // constructors
@@ -39,6 +40,7 @@ class User {
         int getAngerLevel();
         int getGold();
         int getIngredients();
+        bool getGameOver();
 
         // setter functions
         vector<Weapon> addWeapon(Weapon); // add weapon to weapons vector
@@ -54,6 +56,7 @@ class User {
         int setGold(int); // sets the amount of gold
         int setIngredients(int); // set the amount of ingredients
         int setArmor(int); // stores the number of sets of armor the party holds
+        bool setGameOver(bool); // sets the game over boolean
 
         // other functions
         void printDashedLine(); // prints a dashed line to be used in printStatus
@@ -62,8 +65,9 @@ class User {
         void printTreasures(); // prints the number of each type of treasure, to be used in printStatus
         void printStatus(); // prints the status update
         void printInventory(); // prints the current inventory of the user
-        void runPlayerAction(Map&, User); // goes through a player action
+        void runPlayerAction(Map&, User&); // goes through a player action
         void bubbleSortWeapons(vector<Weapon>);
+        void misfortune(); // runs through the chance of getting a misfortune and then what happens if one does occur
         void bubbleSortWeapons();
 };
 

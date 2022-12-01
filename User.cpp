@@ -34,6 +34,10 @@ int User::getIngredients() {
     return ingredients_;
 }
 
+bool User::getGameOver() {
+    return game_over_;
+}
+
 vector<Weapon> User::getWeapons() {
     return weapons_;
 }
@@ -82,6 +86,11 @@ vector<Weapon> User::addWeapon(Weapon weapon) { // add weapon to weapons vector
 int User::setArmor(int armor_num) { // changes armor value of party
     armor_ = armor_num;
     return armor_;
+}
+
+bool User::setGameOver(bool status) {
+    game_over_ = status;
+    return game_over_;
 }
 
 vector<Item> User::addCookware(Item cookware) { // add cookware to cookware vector
@@ -168,7 +177,19 @@ int User::setIngredients(int ingredients) {
     return ingredients;
 }
 
-void User::runPlayerAction(Map &map, User user) {
+void User::misfortune() { // runs through the chance of getting a misfortune and then what happens if one does occur
+    int rand_num = 1 + rand() % 100;
+
+    if(rand_num <= 40) {
+        rand_num = 1 + rand() % 100;
+
+        if(rand_num <= 30) {
+            cout << "OH NO! You were just robbed by rats!!" << endl;
+        }
+    }
+}
+
+void User::runPlayerAction(Map &map, User &user) {
     srand((unsigned) time(NULL));
     int rand_num;
 
@@ -179,7 +200,7 @@ void User::runPlayerAction(Map &map, User user) {
                 "[10% chance you find a key, 20% chance you find treasure, or 20% chance you must fight a random monster]" <<
             "\n  3. Pick a fight and cause a random monster to appear. Defeating a monster has a" <<
                 " 10% chance of dropping a key." <<
-            "\n  4. Cook and Eat using current ingredients and cookware." <<
+            "\n  4. Cook and eat using current ingredients and cookware." <<
             "\n  5. Give up and end the game." << endl;
     cin >> input;
 
@@ -267,9 +288,9 @@ void User::runPlayerAction(Map &map, User user) {
 
                 string amount_input;
                 string cook_input;
-                cout << "Choose which piece of cookware you would like to use from your selection below.\n| " << endl;
+                cout << "Choose which piece of cookware you would like to use from your selection below. Please enter the capital letter of the cookware\n| ";
                 for(int i = 0; i < cookware_.size(); i++) {
-                    cout << cookware_.at(i).getName() << ", chance of breaking: " << cookware_.at(i).getChance() << " | ";
+                    cout << cookware_.at(i).getName() << ", chance of breaking: " << cookware_.at(i).getChance() * 100 << "% | ";
                 }
                 cout << endl;
                 cin >> cook_input;
@@ -295,6 +316,7 @@ void User::runPlayerAction(Map &map, User user) {
                         flag = false;
                     }
                 }
+                
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= cookware_.at(index).getChance() * 100) {
                     cout << "The cookware broke! You lost " << (stoi(amount_input) - (stoi(amount_input) % 5)) << " ingredients and the cookware." << endl;
@@ -302,21 +324,37 @@ void User::runPlayerAction(Map &map, User user) {
                     cookware_.erase(cookware_.begin() + index);
                 }
                 else {
-                    cout << "You cooked a meal successfully! Each member in your party gained " << (stoi(amount_input) / 5) << " fullness." << endl;
+                    cout << "You cooked a meal successfully! Each member in your party gained " << (stoi(amount_input) / 5) << " fullness" << 
+                        " from " << stoi(amount_input) - (stoi(amount_input) % 5) << " ingredients." << endl;
                     ingredients_ -= stoi(amount_input) - (stoi(amount_input) % 5);
                     fullness_ += (stoi(amount_input) / 5);
-                    for(int j = 0; companions_.size(); j++) {
+                    for(int j = 0; j < companions_.size() - 1; j++) {
                         companions_.at(j).setFullness(companions_.at(j).getFullness() + (stoi(amount_input) / 5));
                     }
-
+                    cout << "We made it here" << endl;
                     cout << "| " << name_ << " | Fullness: " << fullness_ << endl;
-                    for(int i = 0; i < companions_.size(); i++) {
-                        Companion compy = companions_.at(i);
+                    for(int j = 0; j < companions_.size(); j++) {
+                        Companion compy = companions_.at(j);
                         cout << "| " << compy.getName() << " | Fullness: " << compy.getFullness() << endl;
                     }
-                    cout << "| Ingredients | " << ingredients_ << endl;
+                    cout << "| Ingredients remaining: " << ingredients_ << endl;
                 }
             }
+            break;
+        }
+
+        case 5:
+        {
+            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
+
+            string YorN;
+            cin >> YorN;
+
+            if(YorN == "y") {
+                cout << "Alright :(, it was a good game while it lasted..." << endl;
+                user.setGameOver(true);
+            }
+            break;
         }
 
         /*
@@ -348,11 +386,11 @@ void User::printCookware() { // prints the number of each type of cookware i.e.:
     int cauldrons = 0; 
 
     for(int i = 0; i < cookware_.size(); i++) {
-        if(cookware_.at(i).getName() == "P")
+        if(cookware_.at(i).getName()[cookware_.at(i).getName().length() - 2] == 'P')
             ceramic_pots++;
-        else if(cookware_.at(i).getName() == "F")
+        else if(cookware_.at(i).getName()[cookware_.at(i).getName().length() - 2] == 'F')
             pans++;
-        else if(cookware_.at(i).getName() == "C")
+        else if(cookware_.at(i).getName()[cookware_.at(i).getName().length() - 2] == 'F')
             cauldrons++;
     }
 
@@ -367,15 +405,15 @@ void User::printWeapons() { // prints the number of each type of weapon i.e.: C:
     int longsword = 0; 
 
     for(int i = 0; i < weapons_.size(); i++) {
-        if(weapons_.at(i).getName() == "C")
+        if(weapons_.at(i).getName()[weapons_.at(i).getName().length() - 2] == 'C')
             clubs++;
-        else if(weapons_.at(i).getName() == "S")
+        else if(weapons_.at(i).getName()[weapons_.at(i).getName().length() - 2] == 'S')
             spears++;
-        else if(weapons_.at(i).getName() == "R")
+        else if(weapons_.at(i).getName()[weapons_.at(i).getName().length() - 2] == 'R')
             rapiers++;
-        else if(weapons_.at(i).getName() == "B")
+        else if(weapons_.at(i).getName()[weapons_.at(i).getName().length() - 2] == 'B')
             battle_axe++;
-        else if(weapons_.at(i).getName() == "L")
+        else if(weapons_.at(i).getName()[weapons_.at(i).getName().length() - 2] == 'L')
             longsword++;
     }
 
@@ -390,15 +428,15 @@ void User::printTreasures() { // prints the number of each type of treasure i.e.
     int goblet = 0;
 
     for(int i = 0; i < selling_treasures_.size(); i++) {
-        if(selling_treasures_.at(i).getName() == "R")
+        if(selling_treasures_.at(i).getName()[selling_treasures_.at(i).getName().length() - 2] == 'R')
             ring++;
-        else if(selling_treasures_.at(i).getName() == "N")
+        else if(selling_treasures_.at(i).getName()[selling_treasures_.at(i).getName().length() - 2] == 'N')
             necklace++;
-        else if(selling_treasures_.at(i).getName() == "B")
+        else if(selling_treasures_.at(i).getName()[selling_treasures_.at(i).getName().length() - 2] == 'B')
             bracelet++;
-        else if(selling_treasures_.at(i).getName() == "C")
+        else if(selling_treasures_.at(i).getName()[selling_treasures_.at(i).getName().length() - 2] == 'C')
             circlet++;
-        else if(selling_treasures_.at(i).getName() == "G")
+        else if(selling_treasures_.at(i).getName()[selling_treasures_.at(i).getName().length() - 2] == 'G')
             goblet++;
     }
 

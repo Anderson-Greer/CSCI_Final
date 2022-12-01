@@ -450,6 +450,7 @@ void User::printRoomInteraction(User &user, Map &map)
                     {
                         cout << "Congratulations on beating the Door! It swings open to reveal the room beyond.\n";
                         // TODO: monster fight - 2 levels higher than rooms_cleared_
+                        break;
                     }
 
                     counter++;

@@ -301,7 +301,15 @@ void User::runPlayerAction(Map &map, User &user) {
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
-
+            if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                NPC npc;
+                npc.printNPCinteraction(user, map);
+            }
+            if (map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                user.printRoomInteraction(user, map);
+            }
             break;
         }
 
@@ -436,6 +444,137 @@ void User::runPlayerAction(Map &map, User &user) {
             }
 
             misfortune(false);
+            break;
+        }
+    }
+}
+
+void User::printRoomInteraction(User &user, Map &map)
+{
+    string input;
+    int rand_num;
+    cout << "Your party has encountered a Room!\n" << endl;
+    cout << "Please choose one of the following: \n";
+    cout << "  1. Move \n";
+    cout << "  2. Open the Door \n";
+    cout << "  3. Give up \n";
+
+    cin >> input;
+
+    switch (stoi(input))
+    {
+        case 1: 
+        {
+            char direction;
+            cout << "Enter a direction you would like to move [w for up, s for down," <<
+                " a for left, and d for right]" << endl;
+            cin >> direction;
+            map.move(direction);
+
+            rand_num = 1 + rand() % 100;
+            if(rand_num <= 20) {
+                fullness_--;
+                cout << "You lost 1 fullness from moving." << endl;
+            }
+            for(int i = 0; i < 4; i++) {
+                rand_num = 1 + rand() % 100;
+                if(rand_num <= 20) {
+                    companions_.at(i).setFullness(companions_.at(i).getFullness() - 1);
+                    cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
+                }
+            }
+            if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                NPC npc;
+                npc.printNPCinteraction(user, map);
+            }
+            break;
+        }
+
+        case 2: 
+        {
+            int doorChoice;
+            if (user.getNumKeys() > 0)
+            {
+                keys_--;
+
+                // TODO: monster fight - 2 levels higher than rooms_cleared_
+            }
+            else if (user.getNumKeys() == 0)
+            {
+                int counter = 0;
+
+                cout << "Uh oh! It seems like your party doesn't possess the key. \n";
+                cout << "However, if you beat the Door in Boulder/Parchment/Shears, it will kindly let you pass. \n";
+                cout << "But beware - Doors like these often have ways of making people... disappear O_o" << endl;
+
+                do
+                {
+                    cout << "Please choose one of the following:\n";
+                    cout << "Boulder (1), Parchment (2), or Shears (3)\n";
+                    cin >> input;
+                    doorChoice = rand() % 3 + 1;
+
+                    if ((stoi(input) == 1 && doorChoice == 2) || (stoi(input) == 2 && doorChoice == 3) || (stoi(input) == 3 && doorChoice == 1))
+                    {
+                        int index = rand() % companions_.size();
+                        cout << "\"You have lost.\" The door says, opening its splinter-filled mouth. \"Now, I must take my prize.\" \n";
+                        cout << "The Door lunges forward and gruesomely devours " << companions_.at(index).getName() << " right before your eyes!\n";
+                        companions_.erase(companions_.begin() + index);
+                        
+                        cout << "Remaining companions: ";
+                        for (int i = 0; i < companions_.size(); i++)
+                        {
+                            cout << companions_.at(i).getName() << " ";
+                        }
+
+                        cout << endl;
+
+                        break;
+                    }
+                    else if ((stoi(input) == 1 && doorChoice == 3) || (stoi(input) == 2 && doorChoice == 1) || (stoi(input) == 3 && doorChoice == 2))
+                    {
+                        cout << "Congratulations on beating the Door! It swings open to reveal the room beyond.\n";
+                        // TODO: monster fight - 2 levels higher than rooms_cleared_
+                    }
+
+                    counter++;
+
+                    if (counter == 3)
+                    {
+                        int index = rand() % companions_.size();
+                        cout << "\"You have taken too much of my time.\" The door says, opening its splinter-filled mouth. \"Now, I must take my prize.\" \n";
+                        cout << "The Door lunges forward and gruesomely devours " << companions_.at(index).getName() << " right before your eyes!\n";
+                        companions_.erase(companions_.begin() + index);
+                        
+                        cout << "Remaining companions: ";
+                        for (int i = 0; i < companions_.size(); i++)
+                        {
+                            cout << companions_.at(i).getName() << " ";
+                        }
+
+                        cout << endl;
+
+                        break;
+                    }
+                }
+                while (stoi(input) == doorChoice);
+            }
+
+            break;
+        }
+
+        case 3:
+        {
+            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
+
+            string YorN;
+            cin >> YorN;
+
+            if(YorN == "y") {
+                cout << "Alright :(, it was a good game while it lasted..." << endl;
+                user.setGameOver(true);
+            }
             break;
         }
     }

@@ -44,7 +44,7 @@ int NPC::split(string input_string, char separator, string arr[], int arr_size)
 }
 
 
-void NPC::printNPCinteraction(User user, Map &map)
+void NPC::printNPCinteraction(User &user, Map &map)
 {
     string input;
     int rand_num;
@@ -141,6 +141,20 @@ void NPC::printNPCinteraction(User user, Map &map)
             }
             map.removeNPC(map.getPlayerRow(), map.getPlayerCol());
 
+            break;
+        }
+
+        case 3:
+        {
+            cout << "Are you sure you want to give up? This will end the game. [y/n]" << endl;
+
+            string YorN;
+            cin >> YorN;
+
+            if(YorN == "y") {
+                cout << "Alright :(, it was a good game while it lasted..." << endl;
+                user.setGameOver(true);
+            }
             break;
         }
     }

@@ -7,7 +7,6 @@
 #include "Companion.cpp"
 #include "Map.cpp"
 #include "Merchant.cpp"
-#include "Game.cpp"
 #include "User.cpp"
 #include "Monster.cpp"
 #include "NPC.cpp"
@@ -17,14 +16,12 @@ using namespace std;
 
 int main() {
 
-    Game game;
-    game.setGameOver(false);
-
     // create the user
     string player_name;
     cout << "Enter a name for your character: " << endl;
     getline(cin, player_name);
     User user(player_name);
+    user.setGameOver(false);
 
     // create the four companions
     cout << "You will now enter the names of your four companions." << endl;
@@ -52,23 +49,24 @@ int main() {
     map.displayMap();
     
 
-    while(!game.getGameOver()) {
+    while(!user.getGameOver()) {
         // game ends from angry sorceror, player loses
         if(user.getAngerLevel() >= 100) {
             cout << "You made the sorceror too angry. He reached an anger level of 100, and opened a portal to hell under your feet." <<
                 "\nGAME OVER" << endl;
-            game.setGameOver(true);
+            user.setGameOver(true);
         }
         // game ends from player escaping, player wins
         else if(user.getRoomsCleared() >= 5 && map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())) {
             cout << "CONGRATULATIONS, YOU MADE IT OUT!!!!!!!" << endl;
-            game.setGameOver(true);
+            user.setGameOver(true);
         }
         // game continues
         else {
             user.runPlayerAction(map, user);
-
-            map.displayMap();
+            
+            if(!user.getGameOver())
+                map.displayMap();
         }
     }
 

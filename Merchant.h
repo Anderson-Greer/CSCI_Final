@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 #include "User.h"
-#include "Game.h"
-
 using namespace std;
 
 class Merchant {

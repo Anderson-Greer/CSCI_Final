@@ -13,11 +13,9 @@ SUBMISSION INFORMATION
 ------------------------
 CSCI1300 Fall 2022 Project 3
 
-Author 1: Anderson Greer
-Recitation: 101 - Morgan Byers
+Author 1: Anderson Greer | Recitation: 101 - Morgan Byers
 
-Author 2: George Frommell
-Recitation: 308 - Baljot Kaur
+Author 2: George Frommell | Recitation: 308 - Baljot Kaur
 
 Date: Dec 1, 2022
 ------------------------

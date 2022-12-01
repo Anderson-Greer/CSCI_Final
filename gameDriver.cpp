@@ -24,6 +24,10 @@ int main() {
     User user(player_name);
     user.setGameOver(false);
 
+    Monster monster;
+    monster.loadMonsters(); // loads in the monsters txt file
+    monster.fightMonster(user);
+
     // create the four companions
     cout << "You will now enter the names of your four companions." << endl;
     for(int i = 0; i < 4; i++) {

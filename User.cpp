@@ -230,6 +230,7 @@ void User::misfortune(bool is_room) { // runs through the chance of getting a mi
                 }
             }
             else {
+                rand_character--;
                 companions_.at(rand_character).setFullness(companions_.at(rand_character).getFullness() - 10);
                 cout << "OH NO! " << companions_.at(rand_character).getName() << " lost 10 fullness." << endl;
 

@@ -390,7 +390,7 @@ bool User::fightMonster(User &user) {
 
                     if (a > 0)
                         result = (r1 * w + d) - ((r2 * c) / a);
-                    else if (a == 0);
+                    else if (a == 0)
                         result = (r1 * w + d) - (r2 * c);
 
                     if(result > 0) {

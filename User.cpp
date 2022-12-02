@@ -533,7 +533,7 @@ void User::runPlayerAction(Map &map, User &user) {
                 fullness_--;
                 cout << "You lost 1 fullness from investigating." << endl;
             }
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < companions_.size(); i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 50) {
                     companions_.at(i).setFullness(1);

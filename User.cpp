@@ -164,7 +164,7 @@ int User::setFullness(int lost_fullness) {
 void User::changePartyFullness(int fullness) { // removes or adds an equal amount of fullness from each party member
     fullness_ += fullness;
     for(int i = 0; i < companions_.size(); i++) {
-        companions_.at(i).setFullness(companions_.at(i).getFullness() + fullness);
+        companions_.at(i).setFullness(fullness);
     }
 }
 
@@ -237,7 +237,7 @@ void User::misfortune(bool is_room) { // runs through the chance of getting a mi
             }
             else {
                 rand_character--;
-                companions_.at(rand_character).setFullness(companions_.at(rand_character).getFullness() - 10);
+                companions_.at(rand_character).setFullness(10);
                 cout << "OH NO! " << companions_.at(rand_character).getName() << " lost 10 fullness." << endl;
 
                 if(companions_.at(rand_character).getFullness() <= 0) {
@@ -394,6 +394,7 @@ void User::fightMonster(User &user) {
                             user.addKey();
                             cout << "The monster also dropped a key!" << endl;
                         }
+
                         user.increaseRoomsCleared();
                     }
                     else {
@@ -474,7 +475,7 @@ void User::runPlayerAction(Map &map, User &user) {
             for(int i = 0; i < 4; i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 20) {
-                    companions_.at(i).setFullness(companions_.at(i).getFullness() - 1);
+                    companions_.at(i).setFullness(1);
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
@@ -505,14 +506,10 @@ void User::runPlayerAction(Map &map, User &user) {
                 }
                 else if(rand_num > 30 && rand_num <= 50) {
                     cout << "You found a monster! Get ready for a fight." << endl;
-                    // TODO: run monster fight
+                    fightMonster(user);
                 }
                 else
                     cout << "You found nothing." << endl;
-            }
-            else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())) {
-                NPC npc;
-                npc.printNPCinteraction(user, map);
             }
             else
                 cout << "This space is already explored, choose another action." << endl;
@@ -525,7 +522,7 @@ void User::runPlayerAction(Map &map, User &user) {
             for(int i = 0; i < 4; i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 50) {
-                    companions_.at(i).setFullness(companions_.at(i).getFullness() - 1);
+                    companions_.at(i).setFullness(1);
                     cout << companions_.at(i).getName() << " lost 1 fullness from investigating." << endl;
                 }
             }
@@ -593,7 +590,7 @@ void User::runPlayerAction(Map &map, User &user) {
                     ingredients_ -= stoi(amount_input) - (stoi(amount_input) % 5);
                     fullness_ += (stoi(amount_input) / 5);
                     for(int j = 0; j < companions_.size() - 1; j++) {
-                        companions_.at(j).setFullness(companions_.at(j).getFullness() + (stoi(amount_input) / 5));
+                        companions_.at(j).setFullness(-(stoi(amount_input) / 5));
                     }
                     cout << "We made it here" << endl;
                     cout << "| " << name_ << " | Fullness: " << fullness_ << endl;
@@ -657,7 +654,7 @@ void User::printRoomInteraction(User &user, Map &map)
             for(int i = 0; i < 4; i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 20) {
-                    companions_.at(i).setFullness(companions_.at(i).getFullness() - 1);
+                    companions_.at(i).setFullness(1);
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }

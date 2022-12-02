@@ -7,7 +7,7 @@ Run: ./proj2
 ------------------------
 DEPENDENCIES
 ------------------------
-All files must be located in the samd directory.
+All files must be located in the same directory.
 ------------------------
 SUBMISSION INFORMATION
 ------------------------

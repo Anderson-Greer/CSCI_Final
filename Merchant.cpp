@@ -499,7 +499,7 @@ void Merchant::printInteraction(User &user) {
                         break;
                     }
                     else {
-                        cout << "You could not afford " << armor_input << " suits of amor for " << price << " Gold." << 
+                        cout << "You could not afford " << armor_input << " suits of armor for " << price << " Gold." << 
                             "\nYou only have " << user.getGold() << " Gold. " << endl;
                         break;
                     }

@@ -312,15 +312,24 @@ void User::fightMonster(User &user) {
 
     NPC npc;
 
-    do 
-    { // makes sure the chosen monster has not already been defeated
-        monster_line = monsters_.at((user.getRoomsCleared() * 4) + random);
-        flag = true;
-        for(int i = 0; i < defeated_monsters_.size(); i++) {
-            if(monster_line == defeated_monsters_.at(i))
-                flag = false;
-        }
-    } while(!flag);
+    if (user.getRoomsCleared() <= 4)
+    {
+        do
+        { // makes sure the chosen monster has not already been defeated
+            monster_line = monsters_.at((user.getRoomsCleared() * 4) + random);
+            flag = true;
+            for(int i = 0; i < defeated_monsters_.size(); i++) {
+                if(monster_line == defeated_monsters_.at(i))
+                    flag = false;
+            }
+        } while(!flag);
+    }
+    else
+    {
+        monster_line = monsters_.at(monsters_.size() - 1);
+    }
+     
+    
 
     npc.split(monster_line, ',', split_arr, arr_size);
 

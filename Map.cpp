@@ -524,6 +524,8 @@ bool Map::move(char direction)
     // if new location is an NPC location, mark as explored
     if (isNPCLocation(player_position_[0], player_position_[1]))
         exploreSpace(player_position_[0], player_position_[1]);
+    if (isRoomLocation(player_position_[0], player_position_[1]))
+        exploreSpace(player_position_[0], player_position_[1]);
 
 
     return true;

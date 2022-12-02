@@ -479,6 +479,8 @@ void User::runPlayerAction(Map &map, User &user) {
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
+            if (!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
+                anger_level_++;
             if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
             {
                 NPC npc;

@@ -76,7 +76,7 @@ void NPC::printNPCinteraction(User &user, Map &map)
             for(int i = 0; i < 4; i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 20) {
-                    companions.at(i).setFullness(companions.at(i).getFullness() - 1);
+                    companions.at(i).setFullness(1);
                     cout << companions.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }

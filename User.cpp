@@ -548,7 +548,7 @@ void User::runPlayerAction(Map &map, User &user) {
                 flag = true;
 
                 string amount_input;
-                string cook_input;
+                char cook_input;
                 cout << "Choose which piece of cookware you would like to use from your selection below. Please enter the capital letter of the cookware\n| ";
                 for(int i = 0; i < cookware_.size(); i++) {
                     cout << cookware_.at(i).getName() << ", chance of breaking: " << cookware_.at(i).getChance() * 100 << "% | ";
@@ -557,15 +557,16 @@ void User::runPlayerAction(Map &map, User &user) {
                 cin >> cook_input;
 
                 for(int i = 0; i < cookware_.size(); i++) {
-                    if(cookware_.at(i).getName() == cook_input  && cook_input == "P") {
+                    char cook_symbol = cookware_.at(i).getName()[cookware_.at(i).getName().length() - 2];
+                    if(cook_symbol == cook_input  && cook_input == 'P') {
                         index = i;
                         i = cookware_.size();
                     }
-                    else if(cookware_.at(i).getName() == cook_input && cook_input == "F") {
+                    else if(cook_symbol == cook_input && cook_input == 'F') {
                         index = i;
                         i = cookware_.size();
                     }
-                    else if(cookware_.at(i).getName() == cook_input && cook_input == "C") {
+                    else if(cook_symbol == cook_input && cook_input == 'C') {
                         index = i;
                         i = cookware_.size();
                     }
@@ -589,7 +590,7 @@ void User::runPlayerAction(Map &map, User &user) {
                         " from " << stoi(amount_input) - (stoi(amount_input) % 5) << " ingredients." << endl;
                     ingredients_ -= stoi(amount_input) - (stoi(amount_input) % 5);
                     fullness_ += (stoi(amount_input) / 5);
-                    for(int j = 0; j < companions_.size() - 1; j++) {
+                    for(int j = 0; j < companions_.size(); j++) {
                         companions_.at(j).setFullness(-(stoi(amount_input) / 5));
                     }
                     cout << "We made it here" << endl;

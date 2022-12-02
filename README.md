@@ -1,9 +1,8 @@
 ------------------------
 HOW TO COMPILE AND RUN
 ------------------------
-Compile: g++ -std=c++17 project2.cpp Post.cpp User.cpp Buffchat.cpp -o 
-proj2
-Run: ./proj2
+Compile: g++ -std=c++17 gameDriver.cpp
+Run: ./a.out
 ------------------------
 DEPENDENCIES
 ------------------------

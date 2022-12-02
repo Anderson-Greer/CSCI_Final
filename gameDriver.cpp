@@ -46,12 +46,6 @@ int main() {
     Merchant merchant(user); // create starting merchant
     merchant.printInteraction(user); 
     user.loadMonsters(); // loads in the monsters txt file
-    user.addKey();
-    user.addKey();
-    user.addKey();
-    user.addKey();
-    user.addKey();
-    NPC npc;
 
     Map map; // create the map
     map.createMap();

@@ -85,6 +85,8 @@ void NPC::printNPCinteraction(User &user, Map &map)
                 NPC npc;
                 npc.printNPCinteraction(user, map);
             }
+            
+            map.removeNPC(map.getPlayerRow(), map.getPlayerCol());
             break;
         }
 
@@ -107,36 +109,34 @@ void NPC::printNPCinteraction(User &user, Map &map)
             int random = rand() % size - 1;
             string riddle = riddleVect[random];
             if (split(riddle, '~', arr, 2) == 2)
-            {
+            {   
                 cout << arr[0] << endl;
+                cout << "Answer: " << arr[1] << endl;
                 cin >> input;
                 string answer = arr[1];
-                bool sim = true;
-
-                if (input.length() == answer.length())
-                {
-                    for (int i = 0; i < input.length(); i++)
-                    {
-                        if (input[i] != answer[i])
-                        {
-                            sim = false;
-                            break;
-                        }
-                    }
-
-                    if (sim)
-                    {
-                        Merchant NPC(user);
-                        NPC.printInteraction(user);
-                    }
-                    else
-                    {
-                        cout << "Wrong answer, buddy! Now you feel my wrath!" << endl;
+                // cout << "Input: " << answer << endl;
+                // cout << "Equal: " << (input[0] == arr[1][0] && input[1] == arr[1][1]) << endl;
+                
+                bool flag = true;
+                if(input.length() + 1 == arr[1].length()) {
+                    cout << input.length() << ", " << arr[1].length() << endl;
+                    for(int i = 0; i < input.length(); i++) {
+                        if(input[i] != arr[1][i])
+                            flag = false;
                     }
                 }
-                else
-                {
+                else {
+                    flag = false;
+                }
+
+                if(flag) {
+                    cout << "Good job! You figured it out. Is there anything you'd like to buy off me?" << endl;
+                    Merchant NPC(user);
+                    NPC.printInteraction(user);
+                }
+                else {
                     cout << "Wrong answer, buddy! Now you feel my wrath!" << endl;
+                    user.fightMonster(user);
                 }
             }
             map.removeNPC(map.getPlayerRow(), map.getPlayerCol());

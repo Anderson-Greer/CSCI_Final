@@ -7,9 +7,10 @@
 #include "Companion.cpp"
 #include "Map.cpp"
 #include "Merchant.cpp"
-#include "User.cpp"
-#include "Monster.cpp"
 #include "NPC.cpp"
+#include "User.cpp"
+
+
 
 
 using namespace std;
@@ -23,10 +24,6 @@ int main() {
     getline(cin, player_name);
     User user(player_name);
     user.setGameOver(false);
-
-    Monster monster;
-    monster.loadMonsters(); // loads in the monsters txt file
-    monster.fightMonster(user);
 
     // create the four companions
     cout << "You will now enter the names of your four companions." << endl;
@@ -48,10 +45,25 @@ int main() {
 
     Merchant merchant(user); // create starting merchant
     merchant.printInteraction(user); 
+    user.loadMonsters(); // loads in the monsters txt file
 
     Map map; // create the map
     map.createMap();
     map.displayMap();
+
+    Weapon weapon(15, 2, "Flaming Battle-Axe (B)");
+    user.addWeapon(weapon);
+    Weapon weapon1(15, 2, "Flaming Battle-Axe (B)");
+    user.addWeapon(weapon1);
+    Weapon weapon2(50, 3, "Vorpal Longsword (L)");
+    user.addWeapon(weapon2);
+    Weapon weapon3(50, 3, "Vorpal Longsword (L)");
+    user.addWeapon(weapon3);
+    Weapon weapon4(50, 3, "Vorpal Longsword (L)");
+    user.addWeapon(weapon4);
+
+    user.addKey();
+    user.addKey();
     
 
     while(!user.getGameOver()) {

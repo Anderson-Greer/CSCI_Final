@@ -276,7 +276,7 @@ void Merchant::printInteraction(User &user) {
                                     user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
-                                        Weapon weapon(2, 0, "Stone Club (C)"); // creates the ceramic pot item
+                                        Weapon weapon(2, 0, "Stone Club (C)");
                                         user.addWeapon(weapon);
                                     }
                                     break;
@@ -315,7 +315,7 @@ void Merchant::printInteraction(User &user) {
                                     user.setGold(user.getGold() - price);
                                     cout << "Congratulations on your purchase! You now have " << user.getGold() << " Gold." << endl;
                                     for(int i = 0; i < stoi(weap_count); i++) {
-                                        Weapon weapon(2, 0, "Iron Spear (S)"); // creates the ceramic pot item
+                                        Weapon weapon(2, 0, "Iron Spear (S)");
                                         user.addWeapon(weapon);
                                     }
                                     break;

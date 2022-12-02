@@ -142,6 +142,12 @@ int User::addKey() { // adds a key to key count and returns the new number of ke
     return keys_;
 }
 
+int User::removeKey()
+{
+    keys_--;
+    return keys_;
+}
+
 int User::increaseRoomsCleared() { // increases the number of rooms cleared
     if(rooms_cleared_ >= 5)
         return -1;
@@ -263,6 +269,175 @@ void User::misfortune(bool is_room) { // runs through the chance of getting a mi
                 return;
             }
         }
+    }
+}
+
+vector<string> User::loadMonsters() {
+    string line;
+    ifstream monsters("Monsters.txt");
+
+    int arr_size = 2;
+    string arr[arr_size];
+
+    while (getline(monsters, line))
+    {
+        monsters_.push_back(line);
+    }
+
+    return monsters_;
+
+    // int size = monsters_.size();
+    // int random = rand() % size - 1;
+}
+
+void User::surrender(User &user) {
+    int rand_character = rand() % (companions_.size() - 1);
+    cout << "You surrendered and " << companions_.at(rand_character).getName() << " died to the monster." << endl;
+    companions_.erase(companions_.begin() + rand_character);
+
+    if(companions_.size() == 0) {
+        cout << "You lost all your companions. GAME OVER." << endl;
+        user.setGameOver(true);
+    }
+}
+
+void User::fightMonster(User user) {
+    int random = rand() % 3;
+
+    string monster_line;
+    bool flag = false;
+
+    string split_arr[2];
+    int arr_size = 2;
+
+    NPC npc;
+
+    do { // makes sure the chosen monster has not already been defeated
+        monster_line = monsters_.at((user.getRoomsCleared() * 4 + random) + (4 * user.getRoomsCleared()));
+        flag = true;
+        for(int i = 0; i < defeated_monsters_.size(); i++) {
+            if(monster_line == defeated_monsters_.at(i))
+                flag = false;
+        }
+    } while(!flag);
+
+    npc.split(monster_line, ',', split_arr, arr_size);
+
+    cout << split_arr[0] << " ahead, get ready for a fight!" << endl;
+
+    flag = false;
+    if(user.getWeapons().size() > 0) {
+        while(!flag) {
+            flag = true;
+            cout << "\nPlease choose one of the following: " <<
+                "\n  1. Fight the monster." <<
+                "\n  2. Surrender and lose 1 companion." << endl;
+
+            string input;
+            cin >> input;
+
+            switch(stoi(input)) {
+                case 1: // fight
+                {   
+                    int w = 0;
+                    if (user.getWeapons().size() >= companions_.size())
+                    {
+                        w += companions_.size();
+                        for (int i = 0; i < companions_.size(); i++)
+                        {
+                            w += user.getWeapons().at(user.getWeapons().size() - i - 1).getDamage();
+                        }
+                    }
+                    else
+                    {
+                        w += user.getWeapons().size();
+                        for (int i = 0; i < user.getWeapons().size(); i++)
+                        {
+                            w += user.getWeapons().at(i).getDamage();
+                        }
+                    }
+                    int d = 4;
+                    for (int i = 0; i < user.getWeapons().size(); i++)
+                    {
+                        for (int j = 0; j < user.getWeapons().size(); j++)
+                        {
+                            if (j != i)
+                            {
+                                if (user.getWeapons().at(i).getName() == user.getWeapons().at(j).getName())
+                                {
+                                    d = 0;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    int a = user.getArmor();
+                    int c = stoi(split_arr[1]);
+                    int r1 = 1 + rand() % 6;
+                    int r2 = 1 + rand() % 6;
+                    double result;
+
+                    if (a > 0)
+                        result = (r1 * w + d) - ((r2 * c) / a);
+                    else if (a == 0);
+                        result = (r1 * w + d) - (r2 * c);
+
+                    if(result > 0) {
+                        defeated_monsters_.push_back(monster_line);
+                        cout << "YOU DEFEATED THE MONSTER! You gained " << (10 * c) << " gold and " << (5 * c) << " ingredients from the monster." << endl;
+                        user.setGold(user.getGold() + 10 * c);
+                        user.setIngredients(user.getIngredients() + 5 * c);
+                        int rand_num = 1 + rand() % 100;
+                        if(rand_num <= 10) {
+                            user.addKey();
+                            cout << "The monster also dropped a key!" << endl;
+                        }
+                        user.increaseRoomsCleared();
+                    }
+                    else {
+                        cout << "The monster defeated your party. You lose " << (user.getGold() * 0.25) << " gold and up to 30 ingredients." << endl;
+                        user.setGold(user.getGold() - user.getGold() * 0.25);
+                        if(user.getIngredients() > 30) {
+                            user.setIngredients(user.getIngredients() - 30);
+                        }
+                        else {
+                            user.setIngredients(0);
+                        }
+                        int rand_num;
+                        for(int i = 0; i < companions_.size(); i++) {
+                            rand_num = 1 + rand() % 100;
+                            if(i + 1 > user.getArmor()) {
+                                if(rand_num <= 10) {
+                                    cout << companions_.at(i).getName() << " was slain." << endl;
+                                    companions_.erase(companions_.begin() + i);
+                                }
+                            }
+                            else if(rand_num <= 5) {
+                                cout << companions_.at(i).getName() << " was slain." << endl;
+                                companions_.erase(companions_.begin() + i);
+                            }
+                        }
+                    }
+                    break;
+                }
+
+                case 2:
+                {
+                    surrender(user);
+                    break;
+                }
+
+                default:
+                    cout << "Enter a valid input." << endl;
+                    flag = false;
+                    break;
+            }
+        }
+    }
+    else {
+        cout << "You have no weapons, you are forced to surrender." << endl;
+        surrender(user);
     }
 }
 
@@ -497,9 +672,8 @@ void User::printRoomInteraction(User &user, Map &map)
             int doorChoice;
             if (user.getNumKeys() > 0)
             {
-                keys_--;
-
-                // TODO: monster fight - 2 levels higher than rooms_cleared_
+                user.removeKey();
+                user.fightMonster(user);
             }
             else if (user.getNumKeys() == 0)
             {
@@ -536,11 +710,18 @@ void User::printRoomInteraction(User &user, Map &map)
                         cout << "\"You have lost.\" The door says, opening its splinter-filled mouth. \"Now, I must take my prize.\" \n";
                         cout << "The Door lunges forward and gruesomely devours " << companions_.at(index).getName() << " right before your eyes!\n";
                         companions_.erase(companions_.begin() + index);
-                        
-                        cout << "Remaining companions: ";
-                        for (int i = 0; i < companions_.size(); i++)
+
+                        if(companions_.size() == 0) {
+                            cout << "You lost all your companions. GAME OVER." << endl;
+                            user.setGameOver(true);
+                        }
+                        else
                         {
-                            cout << companions_.at(i).getName() << " ";
+                            cout << "Remaining companions: ";
+                            for (int i = 0; i < companions_.size(); i++)
+                            {
+                                cout << companions_.at(i).getName() << " ";
+                            }
                         }
 
                         cout << endl;
@@ -550,7 +731,7 @@ void User::printRoomInteraction(User &user, Map &map)
                     else if ((stoi(input) == 1 && doorChoice == 3) || (stoi(input) == 2 && doorChoice == 1) || (stoi(input) == 3 && doorChoice == 2))
                     {
                         cout << "Congratulations on beating the Door! It swings open to reveal the room beyond.\n";
-                        // TODO: monster fight - 2 levels higher than rooms_cleared_
+                        user.fightMonster(user);
                         break;
                     }
 
@@ -591,6 +772,12 @@ void User::printRoomInteraction(User &user, Map &map)
                 cout << "Alright :(, it was a good game while it lasted..." << endl;
                 user.setGameOver(true);
             }
+            break;
+        }
+
+        default:
+        {
+            cout << "Enter a valid input." << endl;
             break;
         }
     }

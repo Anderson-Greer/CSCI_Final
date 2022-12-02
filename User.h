@@ -6,6 +6,8 @@
 
 using namespace std;
 
+class Monster;
+
 class User {
     private:
         string name_;
@@ -21,6 +23,8 @@ class User {
         int gold_;
         int ingredients_;
         bool game_over_;
+        vector<string> monsters_;
+        vector<string> defeated_monsters_;
 
     public:
         // constructors
@@ -49,6 +53,7 @@ class User {
         vector<Item> addTreasure(); // add selling treasure to treasure vector
         vector<Item> removeTreasure(int); // remove selling treasure from treasure vector
         int addKey(); // adds a key to key count and returns the new number of keys
+        int removeKey();
         int increaseRoomsCleared(); // adds one to the number of rooms cleared
         int setFullness(int); // removes parameter health from health value
         void changePartyFullness(int); // removes or adds an equal amount of fullness from each party member
@@ -70,6 +75,9 @@ class User {
         void bubbleSortWeapons(vector<Weapon>);
         void misfortune(bool); // runs through the chance of getting a misfortune and then what happens if one does occur
         void bubbleSortWeapons();
+        vector<string> loadMonsters(); // pulls a monster from the txt file to be used in a fight
+        void fightMonster(User);
+        void surrender(User&);
 };
 
 #endif

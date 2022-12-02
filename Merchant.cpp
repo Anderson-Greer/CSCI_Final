@@ -41,10 +41,11 @@ void Merchant::printInteraction(User &user) {
 
                 price = stoi(ing_input) * price_multiplier_;
 
-                while(stoi(ing_input) % 5 != 0 && stoi(ing_input) < 0) {
+                while(stoi(ing_input) % 5 != 0 || stoi(ing_input) < 0) {
                     cout << "Invalid input." << endl;
-                    cout << "How many kg of ingredients do you need [" << price << " Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
+                    cout << "How many kg of ingredients do you need [" << (1 * price_multiplier_) << " Gold/kg]? (Enter a positive mulitple of 5, or 0 to cancel):" << endl;
                     cin >> ing_input;
+                    price = stoi(ing_input) * price_multiplier_;
                 }
 
                 if(stoi(ing_input) == 0) {

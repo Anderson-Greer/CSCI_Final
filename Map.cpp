@@ -547,7 +547,8 @@ bool Map::move(char direction)
  * Return: nothing (void)
  */
 void Map::displayMap()
-{
+{   
+    cout << "+~~~MAP!~~~+" << endl;
     for (int i = 0; i < num_rows_; i++)
     {
         for (int j = 0; j < num_cols_; j++)
@@ -580,6 +581,7 @@ void Map::displayMap()
         }
         cout << endl;
     }
+    cout << "+~~~~~~~~~~+" << endl;
 }
 
 // generates random locations for all 5 rooms and NPCs
@@ -609,7 +611,6 @@ void Map::createMap() {
         do {
             rand_x = rand() % num_cols_;
             rand_y = rand() % num_rows_;
-            cout << rand_x << " " << rand_y << endl;
         } while(rand_x == 0 && rand_y == 0);
 
         if(isFreeSpace(rand_x, rand_y)) {

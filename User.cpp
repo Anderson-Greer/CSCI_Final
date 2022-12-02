@@ -301,7 +301,7 @@ void User::surrender(User &user) {
     }
 }
 
-void User::fightMonster(User &user) {
+bool User::fightMonster(User &user) {
     int random = rand() % 3;
 
     string monster_line;
@@ -405,6 +405,7 @@ void User::fightMonster(User &user) {
                         }
 
                         user.increaseRoomsCleared();
+                        return true;
                     }
                     else {
                         cout << "The monster defeated your party. You lose " << (user.getGold() * 0.25) << " gold and up to 30 ingredients." << endl;
@@ -450,6 +451,7 @@ void User::fightMonster(User &user) {
         cout << "You have no weapons, you are forced to surrender." << endl;
         surrender(user);
     }
+    return false;
 }
 
 void User::runPlayerAction(Map &map, User &user) {
@@ -685,7 +687,9 @@ void User::printRoomInteraction(User &user, Map &map)
             if (user.getNumKeys() > 0)
             {
                 user.removeKey();
-                user.fightMonster(user);
+                if(user.fightMonster(user)) {
+                    map.removeRoom(map.getPlayerRow(), map.getPlayerCol());
+                }
             }
             else if (user.getNumKeys() == 0)
             {
@@ -743,7 +747,9 @@ void User::printRoomInteraction(User &user, Map &map)
                     else if ((stoi(input) == 1 && doorChoice == 3) || (stoi(input) == 2 && doorChoice == 1) || (stoi(input) == 3 && doorChoice == 2))
                     {
                         cout << "Congratulations on beating the Door! It swings open to reveal the room beyond.\n";
-                        user.fightMonster(user);
+                        if(user.fightMonster(user)) {
+                            map.removeRoom(map.getPlayerRow(), map.getPlayerCol());
+                        }
                         break;
                     }
 
@@ -924,7 +930,7 @@ void User::bubbleSortWeapons()
 
         for (int j = 0; j < weapons_.size() - 1; j++)
         {
-            if (weapons_[j].getDamage() > weapons_[j+1].getDamage())
+            if (weapons_[j].getDamage() < weapons_[j+1].getDamage())
             {
                 Weapon temp = weapons_[j];
                 weapons_[j] = weapons_[j+1];
@@ -932,5 +938,9 @@ void User::bubbleSortWeapons()
                 swap = true;
             }
         }
+    }
+
+    for(int i = 0; i < weapons_.size(); i++) {
+        cout << weapons_.at(i).getName() << endl;
     }
 }

@@ -613,8 +613,6 @@ void Map::createMap() {
             rand_y = rand() % num_rows_;
         } while(rand_x == 0 && rand_y == 0);
 
-        cout << rand_x << ", " << rand_y << endl;
-
         if(isFreeSpace(rand_x, rand_y)) {
             addNPC(rand_x, rand_y);
         }

@@ -66,6 +66,7 @@ void NPC::printNPCinteraction(User &user, Map &map)
             cout << "Enter a direction you would like to move [w for up, s for down," <<
                 " a for left, and d for right]" << endl;
             cin >> direction;
+            map.removeNPC(map.getPlayerRow(), map.getPlayerCol());
             map.move(direction);
 
             rand_num = 1 + rand() % 100;
@@ -85,8 +86,7 @@ void NPC::printNPCinteraction(User &user, Map &map)
                 NPC npc;
                 npc.printNPCinteraction(user, map);
             }
-            
-            map.removeNPC(map.getPlayerRow(), map.getPlayerCol());
+
             break;
         }
 

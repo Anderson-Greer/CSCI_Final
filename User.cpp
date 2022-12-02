@@ -472,15 +472,16 @@ void User::runPlayerAction(Map &map, User &user) {
                 fullness_--;
                 cout << "You lost 1 fullness from moving." << endl;
             }
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < companions_.size(); i++) {
                 rand_num = 1 + rand() % 100;
                 if(rand_num <= 20) {
                     companions_.at(i).setFullness(1);
                     cout << companions_.at(i).getName() << " lost 1 fullness from moving." << endl;
                 }
             }
+
             if (map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol()))
-            {
+            {   
                 NPC npc;
                 npc.printNPCinteraction(user, map);
             }
@@ -488,6 +489,7 @@ void User::runPlayerAction(Map &map, User &user) {
             {
                 user.printRoomInteraction(user, map);
             }
+            
             break;
         }
 

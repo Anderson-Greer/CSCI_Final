@@ -226,7 +226,7 @@ void User::misfortune(bool is_room) { // runs through the chance of getting a mi
         }
         else if(rand_num > 40 && rand_num <= 70) { // food poisoning
             int rand_character = 1 + rand() % (companions_.size() - 1);
-            if(rand_character = 1) {
+            if(rand_character == 1) {
                 fullness_ -= 10;
                 cout << "OH NO! You lost 10 fullness by misfortune." << endl;
                 if(fullness_ <= 0) {

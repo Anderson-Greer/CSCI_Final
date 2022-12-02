@@ -535,8 +535,9 @@ void User::runPlayerAction(Map &map, User &user) {
         case 3:
         {
             cout << "You're getting cocky!" << endl;
-            // TODO: run monster fight
+            fightMonster(user);
             misfortune(false);
+            break;
         }
 
         case 4:

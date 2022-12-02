@@ -51,19 +51,19 @@ int main() {
     map.createMap();
     map.displayMap();
 
-    Weapon weapon(15, 2, "Flaming Battle-Axe (B)");
-    user.addWeapon(weapon);
-    Weapon weapon1(15, 2, "Flaming Battle-Axe (B)");
-    user.addWeapon(weapon1);
-    Weapon weapon2(50, 3, "Vorpal Longsword (L)");
-    user.addWeapon(weapon2);
-    Weapon weapon3(50, 3, "Vorpal Longsword (L)");
-    user.addWeapon(weapon3);
-    Weapon weapon4(50, 3, "Vorpal Longsword (L)");
-    user.addWeapon(weapon4);
+    // Weapon weapon(15, 2, "Flaming Battle-Axe (B)");
+    // user.addWeapon(weapon);
+    // Weapon weapon1(15, 2, "Flaming Battle-Axe (B)");
+    // user.addWeapon(weapon1);
+    // Weapon weapon2(50, 3, "Vorpal Longsword (L)");
+    // user.addWeapon(weapon2);
+    // Weapon weapon3(50, 3, "Vorpal Longsword (L)");
+    // user.addWeapon(weapon3);
+    // Weapon weapon4(50, 3, "Vorpal Longsword (L)");
+    // user.addWeapon(weapon4);
 
-    user.addKey();
-    user.addKey();
+    // user.addKey();
+    // user.addKey();
     
 
     while(!user.getGameOver()) {
@@ -82,8 +82,10 @@ int main() {
         else {
             user.runPlayerAction(map, user);
             
-            if(!user.getGameOver())
+            if(!user.getGameOver()) {
+                user.printStatus();
                 map.displayMap();
+            }
         }
     }
 

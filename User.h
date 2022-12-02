@@ -76,7 +76,7 @@ class User {
         void misfortune(bool); // runs through the chance of getting a misfortune and then what happens if one does occur
         void bubbleSortWeapons();
         vector<string> loadMonsters(); // pulls a monster from the txt file to be used in a fight
-        void fightMonster(User);
+        void fightMonster(User&);
         void surrender(User&);
 };
 

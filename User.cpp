@@ -301,10 +301,10 @@ void User::surrender(User &user) {
     }
 }
 
-void User::fightMonster(User user) {
+void User::fightMonster(User &user) {
     int random = rand() % 3;
 
-    string monster_line;
+    string monster_line = monsters_.at((user.getRoomsCleared() * 4) + random);
     bool flag = false;
 
     string split_arr[2];
@@ -313,7 +313,6 @@ void User::fightMonster(User user) {
     NPC npc;
 
     do { // makes sure the chosen monster has not already been defeated
-        monster_line = monsters_.at((user.getRoomsCleared() * 4 + random) + (4 * user.getRoomsCleared()));
         flag = true;
         for(int i = 0; i < defeated_monsters_.size(); i++) {
             if(monster_line == defeated_monsters_.at(i))

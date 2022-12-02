@@ -51,21 +51,6 @@ int main() {
     map.createMap();
     map.displayMap();
 
-    // Weapon weapon(15, 2, "Flaming Battle-Axe (B)");
-    // user.addWeapon(weapon);
-    // Weapon weapon1(15, 2, "Flaming Battle-Axe (B)");
-    // user.addWeapon(weapon1);
-    // Weapon weapon2(50, 3, "Vorpal Longsword (L)");
-    // user.addWeapon(weapon2);
-    // Weapon weapon3(50, 3, "Vorpal Longsword (L)");
-    // user.addWeapon(weapon3);
-    // Weapon weapon4(50, 3, "Vorpal Longsword (L)");
-    // user.addWeapon(weapon4);
-
-    // user.addKey();
-    // user.addKey();
-    
-
     while(!user.getGameOver()) {
         // game ends from angry sorceror, player loses
         if(user.getAngerLevel() >= 100) {

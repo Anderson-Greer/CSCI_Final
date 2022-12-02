@@ -279,6 +279,7 @@ void Merchant::printInteraction(User &user) {
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(2, 0, "Stone Club (C)");
                                         user.addWeapon(weapon);
+                                        user.bubbleSortWeapons();
                                     }
                                     break;
                                 }
@@ -318,6 +319,7 @@ void Merchant::printInteraction(User &user) {
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(2, 0, "Iron Spear (S)");
                                         user.addWeapon(weapon);
+                                        user.bubbleSortWeapons();
                                     }
                                     break;
                                 }
@@ -357,6 +359,7 @@ void Merchant::printInteraction(User &user) {
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(5, 1, "Mythril Rapier (R)"); // creates the ceramic pot item
                                         user.addWeapon(weapon);
+                                        user.bubbleSortWeapons();
                                     }
                                     break;
                                 }
@@ -396,6 +399,7 @@ void Merchant::printInteraction(User &user) {
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(15, 2, "Flaming Battle-Axe (B)"); // creates the ceramic pot item
                                         user.addWeapon(weapon);
+                                        user.bubbleSortWeapons();
                                     }
                                     break;
                                 }
@@ -435,6 +439,7 @@ void Merchant::printInteraction(User &user) {
                                     for(int i = 0; i < stoi(weap_count); i++) {
                                         Weapon weapon(50, 3, "Vorpal Longsword (L)"); // creates the ceramic pot item
                                         user.addWeapon(weapon);
+                                        user.bubbleSortWeapons();
                                     }
                                     break;
                                 }

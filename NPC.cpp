@@ -111,11 +111,8 @@ void NPC::printNPCinteraction(User &user, Map &map)
             if (split(riddle, '~', arr, 2) == 2)
             {   
                 cout << arr[0] << endl;
-                cout << "Answer: " << arr[1] << endl;
                 cin >> input;
                 string answer = arr[1];
-                // cout << "Input: " << answer << endl;
-                // cout << "Equal: " << (input[0] == arr[1][0] && input[1] == arr[1][1]) << endl;
                 
                 bool flag = true;
                 if(input.length() + 1 == arr[1].length()) {
